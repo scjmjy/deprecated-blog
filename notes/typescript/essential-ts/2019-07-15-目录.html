@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<!--
+Prologue by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Jekyll integration by Chris Bobbe | chrisbobbe.github.io
+-->
+<html><head><!-- Robots -->
+  <meta name="robots" content="index, follow" /><link rel="canonical" href="http://localhost:4000/notes/typescript/essential-ts/2019-07-15-%E7%9B%AE%E5%BD%95.html" /><!-- Title, description, author --><title>C09.TypeScript工程中使用JavaScript | 让IT更简单点 - 一个有信仰的IT爱好者</title>
+  <meta name="description" content="Ronnie的个人网站， 旨在提供清晰易懂的编程教学" />
+  <meta name="author" content="Ronnie" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="C09.TypeScript工程中使用JavaScript | 让IT更简单点 - 一个有信仰的IT爱好者" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://localhost:4000/assets/images/avatar.png" />
+  <meta property="og:url" content="http://localhost:4000/notes/typescript/essential-ts/2019-07-15-%E7%9B%AE%E5%BD%95.html" />
+  <meta property="og:site_name" content="让IT更简单点" />
+  <meta property="og:description" content="Ronnie的个人网站， 旨在提供清晰易懂的编程教学" />
+  
+  <!-- Styles -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js" defer></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!-- <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.1.0/css/all.css" rel="stylesheet"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.1.0/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/md-hl-github.css">
+  <link rel="stylesheet" href="/assets/css/md-layout-github.css">
+
+  <!-- Scripts -->
+  <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js" defer></script>
+  <script src="/assets/js/jquery.scrolly.min.js" defer></script>
+  <script src="/assets/js/jquery.scrollzer.min.js" defer></script>
+  <script src="/assets/js/skel.min.js" defer></script>
+  <script src="/assets/js/util.js" defer></script>
+  <!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js" defer></script><![endif]-->
+  <script src="/assets/js/main.js" defer></script>
+
+</head><body><!-- Header -->
+<div id="header">
+  <div class="top"><!-- Logo -->
+<div id="logo">
+  <a href="http://localhost:4000/" id="home-link">
+    <span class="image avatar48"><img src="/assets/images/avatar.png" alt="Avatar of Ronnie" /></span>
+    <h1 id="title">让IT更简单点</h1>
+    <p>一个有信仰的IT爱好者</p>
+  </a>
+</div><!-- Nav -->
+<nav id="nav">
+  <ul><!-- <li><a href="http://localhost:4000/" id="主页-link"> -->
+          <li><a href="/" id="主页-link">
+            <span class="icon fa-home">主页</span>
+          </a></li><!-- <li><a href="http://localhost:4000/blog.html" id="文章-link"> -->
+          <li><a href="/blog.html" id="文章-link">
+            <span class="icon fa-link">文章</span>
+          </a></li></ul>
+</nav></div>
+  <div class="bottom"><!-- Social Icons -->
+<ul class="icons"><li><a href="https://github.com/scjmjy" class="icon-b fa-github"><span class="label">GitHub</span></a></li><li><a href="mailto:mjyok12345@gmail.com" class="icon fa-envelope"><span class="label">Email</span></a></li></ul>
+</div>
+</div>
+<!-- Main -->
+<div id="main">
+	<!-- Post -->
+	<article class="markdown-body">
+	  <div class="container">
+			<header>
+				<h2>C09.TypeScript工程中使用JavaScript</h2>
+				<p>Ronnie, 15 July 2019</p>
+			</header><p>TypeScript项目通常包含一些纯JavaScript代码，要么是因为项目本身就是用TypeScript和JavaScript写的，要么是因为项目依赖于用NPM安装的JavaScript第三方包。
+本章讲解在TypeScript项目中如何使用JavaScript代码。</p>
+
+<h3 id="1-在编译过程中包含javascript">1. <a href="/notes/typescript/essential-ts/2019-07-16-01.%E5%9C%A8%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%8C%85%E5%90%ABJavaScript.html">在编译过程中包含JavaScript</a></h3>
+
+<h3 id="2-javascript代码的类型检测">2. <a href="/notes/typescript/essential-ts/2019-07-17-02.JavaScript%E4%BB%A3%E7%A0%81%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%B5%8B.html">JavaScript代码的类型检测</a></h3>
+
+<h3 id="3-描述javascript代码的类型">3. <a href="/notes/typescript/essential-ts/2019-07-18-03.%E6%8F%8F%E8%BF%B0JavaScript%E4%BB%A3%E7%A0%81%E7%9A%84%E7%B1%BB%E5%9E%8B.html">描述JavaScript代码的类型</a></h3>
+
+<hr />
+
+<p>接下来，我们从第一节开始学习吧——<a href="/notes/typescript/essential-ts/2019-07-16-01.%E5%9C%A8%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%8C%85%E5%90%ABJavaScript.html">在编译过程中包含JavaScript</a>。</p>
+</div>
+	</article>
+</div><!-- Footer -->
+<div id="footer" style="margin-bottom: 0;">
+  
+  <!-- Copyright -->
+  <ul class="copyright">
+    
+      <li>&copy;让IT更简单点. All rights reserved.</li>
+    
+    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    <li>Jekyll integration: <a href="https://chrisbobbe.github.io/">Chris Bobbe</a></li>
+  </ul>
+  
+</div></body>
+</html>

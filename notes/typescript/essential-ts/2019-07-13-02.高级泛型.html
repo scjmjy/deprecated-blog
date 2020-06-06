@@ -1,0 +1,859 @@
+<!DOCTYPE HTML>
+<!--
+Prologue by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Jekyll integration by Chris Bobbe | chrisbobbe.github.io
+-->
+<html><head><!-- Robots -->
+  <meta name="robots" content="index, follow" /><link rel="canonical" href="http://localhost:4000/notes/typescript/essential-ts/2019-07-13-02.%E9%AB%98%E7%BA%A7%E6%B3%9B%E5%9E%8B.html" /><!-- Title, description, author --><title>02.高级泛型 | 让IT更简单点 - 一个有信仰的IT爱好者</title>
+  <meta name="description" content="Ronnie的个人网站， 旨在提供清晰易懂的编程教学" />
+  <meta name="author" content="Ronnie" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="02.高级泛型 | 让IT更简单点 - 一个有信仰的IT爱好者" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://localhost:4000/assets/images/avatar.png" />
+  <meta property="og:url" content="http://localhost:4000/notes/typescript/essential-ts/2019-07-13-02.%E9%AB%98%E7%BA%A7%E6%B3%9B%E5%9E%8B.html" />
+  <meta property="og:site_name" content="让IT更简单点" />
+  <meta property="og:description" content="Ronnie的个人网站， 旨在提供清晰易懂的编程教学" />
+  
+  <!-- Styles -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js" defer></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!-- <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.1.0/css/all.css" rel="stylesheet"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.1.0/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/md-hl-github.css">
+  <link rel="stylesheet" href="/assets/css/md-layout-github.css">
+
+  <!-- Scripts -->
+  <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js" defer></script>
+  <script src="/assets/js/jquery.scrolly.min.js" defer></script>
+  <script src="/assets/js/jquery.scrollzer.min.js" defer></script>
+  <script src="/assets/js/skel.min.js" defer></script>
+  <script src="/assets/js/util.js" defer></script>
+  <!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js" defer></script><![endif]-->
+  <script src="/assets/js/main.js" defer></script>
+
+</head><body><!-- Header -->
+<div id="header">
+  <div class="top"><!-- Logo -->
+<div id="logo">
+  <a href="http://localhost:4000/" id="home-link">
+    <span class="image avatar48"><img src="/assets/images/avatar.png" alt="Avatar of Ronnie" /></span>
+    <h1 id="title">让IT更简单点</h1>
+    <p>一个有信仰的IT爱好者</p>
+  </a>
+</div><!-- Nav -->
+<nav id="nav">
+  <ul><!-- <li><a href="http://localhost:4000/" id="主页-link"> -->
+          <li><a href="/" id="主页-link">
+            <span class="icon fa-home">主页</span>
+          </a></li><!-- <li><a href="http://localhost:4000/blog.html" id="文章-link"> -->
+          <li><a href="/blog.html" id="文章-link">
+            <span class="icon fa-link">文章</span>
+          </a></li></ul>
+</nav></div>
+  <div class="bottom"><!-- Social Icons -->
+<ul class="icons"><li><a href="https://github.com/scjmjy" class="icon-b fa-github"><span class="label">GitHub</span></a></li><li><a href="mailto:mjyok12345@gmail.com" class="icon fa-envelope"><span class="label">Email</span></a></li></ul>
+</div>
+</div>
+<!-- Main -->
+<div id="main">
+	<!-- Post -->
+	<article class="markdown-body">
+	  <div class="container">
+			<header>
+				<h2>02.高级泛型</h2>
+				<p>Ronnie, 13 July 2019</p>
+			</header><!-- # 高级泛型 -->
+<p>本节讲解泛型的高级特性和用法。</p>
+
+<p>本节目录：</p>
+
+<!-- TOC -->
+
+<ul>
+  <li><a href="#1-使用泛型集合类">1. 使用泛型集合类</a>
+    <ul>
+      <li><a href="#11-javascript提供的集合">1.1. JavaScript提供的集合</a></li>
+      <li><a href="#12-typescript提供泛型集合类">1.2. TypeScript提供泛型集合类</a>
+        <ul>
+          <li><a href="#121-示例">1.2.1. 示例</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#2-使用泛型迭代器generic-iterators">2. 使用泛型迭代器（Generic Iterators）</a>
+    <ul>
+      <li><a href="#21-手动使用">2.1. 手动使用</a></li>
+      <li><a href="#22-使用forof">2.2. 使用for…of</a></li>
+      <li><a href="#23-使用扩展操作符spread-operator">2.3. 使用扩展操作符”…“(Spread Operator)</a></li>
+      <li><a href="#24-迭代器原理">2.4. 迭代器原理</a></li>
+      <li><a href="#25-支持javascript-es5及更早期版本">2.5. 支持JavaScript ES5及更早期版本</a></li>
+      <li><a href="#26-创建可迭代的类">2.6. 创建可迭代的类</a></li>
+    </ul>
+  </li>
+  <li><a href="#3-索引类型index-types">3. 索引类型（Index Types）</a>
+    <ul>
+      <li><a href="#31-用于限制泛型参数">3.1. 用于限制泛型参数</a></li>
+      <li><a href="#32-使用索引访问操作符indexed-access-operator">3.2. 使用索引访问操作符（Indexed Access Operator）</a>
+        <ul>
+          <li><a href="#321-用于泛型">3.2.1. 用于泛型</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#4-类型映射type-mapping">4. 类型映射（Type Mapping）</a>
+    <ul>
+      <li><a href="#41-示例">4.1. 示例</a></li>
+      <li><a href="#42-应用于泛型">4.2. 应用于泛型</a></li>
+      <li><a href="#43-改变原类型属性的可选性和可变性">4.3. 改变原类型属性的可选性和可变性</a></li>
+      <li><a href="#44-映射指定的属性">4.4. 映射指定的属性</a>
+        <ul>
+          <li><a href="#441-示例">4.4.1. 示例</a></li>
+        </ul>
+      </li>
+      <li><a href="#45-在单个类型映射中合并以上的变换">4.5. 在单个类型映射中合并以上的变换</a>
+        <ul>
+          <li><a href="#451-示例">4.5.1. 示例</a></li>
+        </ul>
+      </li>
+      <li><a href="#46-使用类型映射创建新的类型">4.6. 使用类型映射创建新的类型</a>
+        <ul>
+          <li><a href="#461-示例">4.6.1. 示例</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#5-条件类型">5. 条件类型</a>
+    <ul>
+      <li><a href="#51-基本语法示例">5.1. 基本语法示例</a></li>
+      <li><a href="#52-内嵌的条件类型">5.2. 内嵌的条件类型</a>
+        <ul>
+          <li><a href="#521-示例">5.2.1. 示例</a></li>
+        </ul>
+      </li>
+      <li><a href="#53-在泛型类中使用条件类型">5.3. 在泛型类中使用条件类型</a></li>
+      <li><a href="#54-使用带有联合类型的条件类型">5.4. 使用带有联合类型的条件类型</a>
+        <ul>
+          <li><a href="#541-示例">5.4.1. 示例</a></li>
+          <li><a href="#542-使用内置的分布式条件类型">5.4.2. 使用内置的分布式条件类型</a></li>
+        </ul>
+      </li>
+      <li><a href="#55-在类型映射中使用条件类型">5.5. 在类型映射中使用条件类型</a>
+        <ul>
+          <li><a href="#551-示例">5.5.1. 示例</a></li>
+        </ul>
+      </li>
+      <li><a href="#56-标识特定类型的属性">5.6. 标识特定类型的属性</a>
+        <ul>
+          <li><a href="#561-示例">5.6.1. 示例</a></li>
+        </ul>
+      </li>
+      <li><a href="#57-条件类型中推断附加的类型">5.7. 条件类型中推断附加的类型</a>
+        <ul>
+          <li><a href="#571-示例">5.7.1. 示例</a></li>
+          <li><a href="#572-用法示例">5.7.2. 用法示例</a></li>
+          <li><a href="#573-推断函数的类型">5.7.3. 推断函数的类型</a>
+            <ul>
+              <li><a href="#5731-示例">5.7.3.1. 示例</a></li>
+              <li><a href="#5732-处理函数的内置的推断类型">5.7.3.2. 处理函数的内置的推断类型</a></li>
+              <li><a href="#5733-关于构造器函数的类型推断">5.7.3.3. 关于构造器函数的类型推断</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<!-- /TOC -->
+
+<hr />
+
+<h2 id="1-使用泛型集合类">1. 使用泛型集合类</h2>
+
+<h3 id="11-javascript提供的集合">1.1. JavaScript提供的集合</h3>
+<ol>
+  <li>
+    <p>在 <code class="language-plaintext highlighter-rouge">Object</code> 中存储键值对</p>
+
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">let</span> <span class="nx">objMap</span> <span class="o">=</span> <span class="p">{};</span>
+ <span class="nx">objMap</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">John</span><span class="dl">'</span><span class="p">;</span>
+ <span class="nx">objMap</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">18</span><span class="p">;</span>
+
+ <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">objMap</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">key</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">key</span><span class="p">));</span>
+
+ <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">objMap</span><span class="p">)</span> <span class="p">{</span>
+     <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">objMap</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>使用 <code class="language-plaintext highlighter-rouge">Map</code></p>
+
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">let</span> <span class="nx">persons</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Map</span><span class="p">();</span>
+ <span class="nx">persons</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="dl">'</span><span class="s1">John</span><span class="dl">'</span><span class="p">,</span><span class="mi">28</span><span class="p">);</span>
+ <span class="nx">persons</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">John</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>使用 <code class="language-plaintext highlighter-rouge">Array</code></p>
+
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">let</span> <span class="nx">cities</span> <span class="o">=</span> <span class="p">[];</span>
+ <span class="nx">cities</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">SH</span><span class="dl">'</span><span class="p">;</span>
+ <span class="nx">cities</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">BJ</span><span class="dl">'</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="12-typescript提供泛型集合类">1.2. TypeScript提供泛型集合类</h3>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">Array&lt;T&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Map&lt;K, V&gt;</code>, <code class="language-plaintext highlighter-rouge">WeakMap&lt;K, V&gt;</code>, <code class="language-plaintext highlighter-rouge">ReadonlyMap&lt;K, V&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Set&lt;T&gt;</code>,  <code class="language-plaintext highlighter-rouge">WeakSet&lt;T&gt;</code>, <code class="language-plaintext highlighter-rouge">ReadonlySet&lt;T&gt;</code></li>
+</ol>
+
+<h4 id="121-示例">1.2.1. 示例</h4>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">cities</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span><span class="p">(</span><span class="dl">'</span><span class="s1">SH</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">BJ</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">personNames</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Set</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span><span class="p">([</span><span class="dl">'</span><span class="s1">John</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Peter</span><span class="dl">'</span><span class="p">]);</span>
+<span class="kd">let</span> <span class="nx">persons</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Map</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">number</span><span class="o">&gt;</span><span class="p">([[</span><span class="dl">'</span><span class="s1">John</span><span class="dl">'</span><span class="p">,</span> <span class="mi">18</span><span class="p">],</span> <span class="p">[</span><span class="dl">'</span><span class="s1">Peter</span><span class="dl">'</span><span class="p">,</span> <span class="mi">29</span><span class="p">]]);</span>
+</code></pre></div></div>
+
+<h2 id="2-使用泛型迭代器generic-iterators">2. 使用泛型迭代器（Generic Iterators）</h2>
+
+<h3 id="21-手动使用">2.1. 手动使用</h3>
+<ul>
+  <li>
+    <p>迭代器提供了 <code class="language-plaintext highlighter-rouge">next()</code> 方法，返回具有 <code class="language-plaintext highlighter-rouge">done</code> 和 <code class="language-plaintext highlighter-rouge">value</code> 属性的 <code class="language-plaintext highlighter-rouge">IteratorResult</code> 对象</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">let</span> <span class="nx">keys</span> <span class="o">=</span> <span class="nx">persons</span><span class="p">.</span><span class="nx">keys</span><span class="p">();</span> <span class="c1">// 返回Map&lt;string, number&gt;键的迭代器</span>
+ <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span> <span class="nx">result</span><span class="p">.</span><span class="nx">done</span> <span class="o">===</span> <span class="kc">false</span><span class="p">;</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">next</span><span class="p">())</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>    
+ <span class="p">}</span>
+
+ <span class="kd">let</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">persons</span><span class="p">.</span><span class="nx">values</span><span class="p">();</span> <span class="c1">// 返回Map&lt;string, number&gt;值的迭代器</span>
+ <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">values</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span> <span class="nx">result</span><span class="p">.</span><span class="nx">done</span> <span class="o">===</span> <span class="kc">false</span><span class="p">;</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">values</span><span class="p">.</span><span class="nx">next</span><span class="p">())</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+ <span class="p">}</span>
+
+ <span class="kd">let</span> <span class="nx">pairsIterator</span> <span class="o">=</span> <span class="nx">persons</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span> <span class="c1">// 返回Map&lt;string, number&gt;键值对迭代器</span>
+ <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">pair</span> <span class="o">=</span> <span class="nx">pairsIterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span> <span class="nx">pair</span><span class="p">.</span><span class="nx">done</span> <span class="o">===</span> <span class="kc">false</span><span class="p">;</span> <span class="nx">pair</span> <span class="o">=</span> <span class="nx">pairsIterator</span><span class="p">.</span><span class="nx">next</span><span class="p">())</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">pair</span><span class="p">.</span><span class="nx">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>    
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">pair</span><span class="p">.</span><span class="nx">value</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>    
+ <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="22-使用forof">2.2. 使用for…of</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">for...of</code> 可以应用于可迭代的对象，即定义了 <code class="language-plaintext highlighter-rouge">[Symbol.iterator]()</code> 方法的对象</li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">for...of</code> 会自动触发 <code class="language-plaintext highlighter-rouge">[Symbol.iterator]()</code> ，并自动调用 <code class="language-plaintext highlighter-rouge">Iterator.next()</code></p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">let</span> <span class="nx">keys</span> <span class="o">=</span> <span class="nx">persons</span><span class="p">.</span><span class="nx">keys</span><span class="p">();</span> <span class="c1">// keys是可迭代的迭代器IterableIterator</span>
+ <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">keys</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 调用IterableIterator.[Symbol.iterator]</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+ <span class="p">}</span>
+
+ <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">pair</span> <span class="k">of</span> <span class="nx">persons</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 调用Map.[Symbol.iterator]，并自动调用Iterator.next()方法</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="23-使用扩展操作符spread-operator">2.3. 使用扩展操作符”…“(Spread Operator)</h3>
+<ul>
+  <li>扩展操作符（…）可以应用于可迭代的对象，即定义了 <code class="language-plaintext highlighter-rouge">[Symbol.iterator]()</code> 方法的对象</li>
+  <li>
+    <p>扩展操作符（…）会自动触发 <code class="language-plaintext highlighter-rouge">[Symbol.iterator]()</code> ，并自动调用 <code class="language-plaintext highlighter-rouge">Iterator.next()</code></p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// [...]会调用Map.[Symbol.iterator]，并自动调用Iterator.next()方法</span>
+ <span class="kd">let</span> <span class="nx">pairs</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">persons</span><span class="p">];</span> <span class="c1">// pairs是[string,number][]类型</span>
+ <span class="kd">let</span> <span class="nx">keys</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">persons</span><span class="p">.</span><span class="nx">keys</span><span class="p">()];</span> <span class="c1">// keys是string[]类型</span>
+ <span class="kd">let</span> <span class="nx">values</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">persons</span><span class="p">.</span><span class="nx">values</span><span class="p">()];</span> <span class="c1">// values是number[]类型</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="24-迭代器原理">2.4. 迭代器原理</h3>
+<ul>
+  <li>参考本章第三节<a href="/notes/typescript/essential-ts/2019-07-14-03.%E6%B3%9B%E5%9E%8B%E8%BF%AD%E4%BB%A3%E5%99%A8.html">泛型迭代器（Generic Iterators）</a>来更加透彻的理解迭代器原理</li>
+</ul>
+
+<h3 id="25-支持javascript-es5及更早期版本">2.5. 支持JavaScript ES5及更早期版本</h3>
+<ul>
+  <li>迭代器是在JavaScript ES6标准中引入的，所以如果tsconfig.json的<strong>target</strong>指向了早期版本的JavaScript，那么就需要设置 <strong>“downlevelIteration”:true</strong></li>
+</ul>
+
+<h3 id="26-创建可迭代的类">2.6. 创建可迭代的类</h3>
+<ul>
+  <li>
+    <p>简单示例</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">class</span> <span class="nx">IterableCollection</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kr">protected</span> <span class="na">items</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[];</span>
+
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]():</span> <span class="nx">IterableIterator</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">values</span><span class="p">();</span>
+    <span class="p">}</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>更多请参考<a href="#24-迭代器原理">迭代器原理</a></p>
+  </li>
+</ul>
+
+<h2 id="3-索引类型index-types">3. 索引类型（Index Types）</h2>
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">keyof</code> 关键字即<strong>索引类型查询</strong>操作符（<strong>index type query</strong> operator），返回一个对象里所有属性名字的联合（一组字符串的字面值类型）</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">type</span> <span class="nx">Person</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="na">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
+     <span class="nl">age</span><span class="p">:</span> <span class="nx">number</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="nx">type</span> <span class="nx">myType</span> <span class="o">=</span> <span class="nx">keyof</span> <span class="nx">Person</span><span class="p">;</span> <span class="c1">// myType是'name'|'age'字面值类型</span>
+ <span class="kd">let</span> <span class="na">myVar</span><span class="p">:</span><span class="nx">myType</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">age</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// Ok. 'age'在"name" | "age"里面</span>
+ <span class="nx">myVar</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// Ok. 'name'在"name" | "age"里面</span>
+ <span class="nx">myVar</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">xxx</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// Error: Type '"xxx"' is not assignable to type '"name" | "age"'.ts(2322)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="31-用于限制泛型参数">3.1. 用于限制泛型参数</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">getValue</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">K</span> <span class="kd">extends</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">item</span><span class="p">:</span> <span class="nx">T</span><span class="p">,</span> <span class="nx">keyname</span><span class="p">:</span> <span class="nx">K</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Value: </span><span class="p">${</span><span class="nx">item</span><span class="p">[</span><span class="nx">keyname</span><span class="p">]}</span><span class="s2">`</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Product</span><span class="p">(</span><span class="dl">"</span><span class="s2">Running Shoes</span><span class="dl">"</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+<span class="nx">getValue</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">getValue</span><span class="o">&lt;</span><span class="nx">Product</span><span class="p">,</span> <span class="dl">'</span><span class="s1">price</span><span class="dl">'</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="dl">"</span><span class="s2">price</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// 显示提供索引类型的泛型参数</span>
+<span class="nx">getValue</span><span class="o">&lt;</span><span class="nx">Product</span><span class="p">,</span> <span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="dl">"</span><span class="s2">foo</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// Error: Type '"foo"' does not satisfy the constraint '"name" | "price"'.ts(2344)</span>
+
+<span class="kd">let</span> <span class="nx">e</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Employee</span><span class="p">(</span><span class="dl">"</span><span class="s2">Bob Smith</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Sales</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">getValue</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">getValue</span><span class="o">&lt;</span><span class="nx">Employee</span><span class="p">,</span> <span class="dl">'</span><span class="s1">role</span><span class="dl">'</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="dl">"</span><span class="s2">role</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// 显示提供索引类型的泛型参数</span>
+<span class="nx">getValue</span><span class="o">&lt;</span><span class="nx">Employee</span><span class="p">,</span> <span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="dl">"</span><span class="s2">foo</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// Error: Type '"foo"' does not satisfy the constraint '"name" | "role"'.ts(2344)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/TypeScript学习笔记/Essential-TypeScript/index_type.png" alt="index_type" /></p>
+
+<h3 id="32-使用索引访问操作符indexed-access-operator">3.2. 使用索引访问操作符（Indexed Access Operator）</h3>
+<ul>
+  <li>
+    <p>索引访问操作符(跟在类型之后的方括号 <strong>[]</strong> )可以获取一个对象的属性的类型</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">type</span> <span class="nx">priceType</span> <span class="o">=</span> <span class="nx">Product</span><span class="p">[</span><span class="dl">'</span><span class="s1">price</span><span class="dl">'</span><span class="p">];</span>
+ <span class="nx">type</span> <span class="nx">allTypes</span> <span class="o">=</span> <span class="nx">Product</span><span class="p">[</span><span class="nx">keyof</span> <span class="nx">Product</span><span class="p">];</span> <span class="c1">// 获取Product所有属性的类型</span>
+ <span class="nx">type</span> <span class="nx">allTypes2</span> <span class="o">=</span> <span class="nx">Product</span><span class="p">[</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="o">|</span><span class="dl">'</span><span class="s1">price</span><span class="dl">'</span><span class="p">];</span> <span class="c1">// 由于Product只有name和price属性，所以此语句也等价于上一行的语句</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="321-用于泛型">3.2.1. 用于泛型</h4>
+<ul>
+  <li>
+    <p>索引访问操作符常用于泛型</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">// T[K]指的是类型T里名字为K的属性的类型</span>
+ <span class="kd">function</span> <span class="nx">getValue</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">K</span> <span class="kd">extends</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">item</span><span class="p">:</span> <span class="nx">T</span><span class="p">,</span> <span class="nx">keyname</span><span class="p">:</span> <span class="nx">K</span><span class="p">):</span> <span class="nx">T</span><span class="p">[</span><span class="nx">K</span><span class="p">]</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">item</span><span class="p">[</span><span class="nx">keyname</span><span class="p">];</span>
+ <span class="p">}</span>
+ <span class="kd">let</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Product</span><span class="p">(</span><span class="dl">"</span><span class="s2">Running Shoes</span><span class="dl">"</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+ <span class="nx">getValue</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// getValue的返回值类型是Product['name']即string类型</span>
+ <span class="nx">getValue</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="dl">"</span><span class="s2">price</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// getValue的返回值类型是Product['name']即number类型</span>
+</code></pre></div>    </div>
+
+    <p><img src="/assets/images/TypeScript学习笔记/Essential-TypeScript/index_type_for_generictype.png" alt="index_type_for_generictype" /></p>
+  </li>
+</ul>
+
+<h2 id="4-类型映射type-mapping">4. 类型映射（Type Mapping）</h2>
+<ul>
+  <li>映射的类型是通过映射现有类型的全部或部分来创建的</li>
+  <li>类型映射不会创建一个class类型，只是创建了一种形状，可被当作类型别名或接口来使用</li>
+  <li>如果映射一个类的话，该类的构造器函数会被忽略，以及方法的实现也会被忽略（保留方法的签名）</li>
+</ul>
+
+<h3 id="41-示例">4.1. 示例</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Product</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="kr">public</span> <span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="kr">public</span> <span class="nx">price</span><span class="p">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+    <span class="nx">getPrice</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">price</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">type</span> <span class="nx">MappedProduct</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nx">p</span> <span class="k">in</span> <span class="nx">keyof</span> <span class="nx">Product</span><span class="p">]:</span> <span class="nx">Product</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="c1">// 等价于：</span>
+<span class="c1">// type MappedProduct = { // Product的构造器函数被忽略了，getPrice的实现也被忽略了</span>
+<span class="c1">//     name: string;</span>
+<span class="c1">//     price: number;</span>
+<span class="c1">//     getPrice: () =&gt; number;</span>
+<span class="c1">// }</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/TypeScript学习笔记/Essential-TypeScript/mapped_type.png" alt="mapped_type" /></p>
+
+<h3 id="42-应用于泛型">4.2. 应用于泛型</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">type</span> <span class="nx">MappedType</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nx">p</span> <span class="k">in</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="p">]:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="nx">type</span> <span class="nx">MappedProduct</span> <span class="o">=</span> <span class="nx">MappedType</span><span class="o">&lt;</span><span class="nx">Product</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="43-改变原类型属性的可选性和可变性">4.3. 改变原类型属性的可选性和可变性</h3>
+<ul>
+  <li>可选性（Optionality）
+    <ul>
+      <li>
+        <p>属性全部变为可选的，参考内置映射类型 <code class="language-plaintext highlighter-rouge">Partial&lt;T&gt;</code></p>
+
+        <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">type</span> <span class="nx">Product</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="na">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>  <span class="c1">// name是必须的</span>
+     <span class="nl">price</span><span class="p">:</span> <span class="nx">number</span><span class="p">;</span> <span class="c1">// price是必须的</span>
+     <span class="nx">getPrice</span><span class="p">():</span> <span class="nx">number</span><span class="p">;</span> <span class="c1">// getPrice也是必须的</span>
+  <span class="p">}</span>
+  <span class="nx">type</span> <span class="nx">MakeOptional</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">// 等同于内置映射类型Partial&lt;T&gt;</span>
+     <span class="p">[</span><span class="nx">p</span> <span class="k">in</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="p">]?:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="c1">// ?表示把属性变为可选的</span>
+  <span class="p">}</span>
+  <span class="nx">type</span> <span class="nx">MappedProduct</span> <span class="o">=</span> <span class="nx">MakeOptional</span><span class="o">&lt;</span><span class="nx">Product</span><span class="o">&gt;</span><span class="p">;</span>
+
+  <span class="c1">// 等价于</span>
+  <span class="c1">// type MappedProduct = {</span>
+  <span class="c1">//     name?: string;  // name是可选的</span>
+  <span class="c1">//     price?: number; // price是可选的</span>
+  <span class="c1">//     getPrice?: () =&gt; number; // getPrice也是可选的</span>
+  <span class="c1">// }</span>
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>属性全变为必须的，参考内置映射类型 <code class="language-plaintext highlighter-rouge">Required&lt;T&gt;</code></p>
+
+        <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">type</span> <span class="nx">Product</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="p">?:</span> <span class="nx">string</span><span class="p">;</span>  <span class="c1">// name是可选的</span>
+    <span class="nl">price</span><span class="p">?:</span> <span class="nx">number</span><span class="p">;</span> <span class="c1">// price是可选的</span>
+    <span class="nx">getPrice</span><span class="p">?():</span> <span class="nx">number</span><span class="p">;</span> <span class="c1">// getPrice也是可选的</span>
+ <span class="p">}</span>
+ <span class="nx">type</span> <span class="nx">MakeRequired</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1">// 等同于内置映射类型Required&lt;T&gt;</span>
+    <span class="p">[</span><span class="nx">p</span> <span class="k">in</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="p">]</span><span class="o">-</span><span class="p">?:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="c1">// -?表示去除可选，变为必须</span>
+ <span class="p">}</span>
+ <span class="nx">type</span> <span class="nx">MappedProduct</span> <span class="o">=</span> <span class="nx">MakeRequired</span><span class="o">&lt;</span><span class="nx">Product</span><span class="o">&gt;</span><span class="p">;</span>
+
+ <span class="c1">// 等价于</span>
+ <span class="c1">// type MappedProduct = {</span>
+ <span class="c1">//     name: string;  // name是必须的</span>
+ <span class="c1">//     price: number; // price是必须的</span>
+ <span class="c1">//     getPrice: () =&gt; number; // getPrice也是必须的</span>
+ <span class="c1">// }</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>改变可变性（Mutability）即读写权限
+    <ul>
+      <li>
+        <p>属性全变为只读的，参考内置映射类型 <code class="language-plaintext highlighter-rouge">Readonly&lt;T&gt;</code></p>
+
+        <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">type</span> <span class="nx">Product</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="na">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
+     <span class="nl">price</span><span class="p">:</span> <span class="nx">number</span><span class="p">;</span>
+     <span class="nl">getPrice</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">number</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">type</span> <span class="nx">MakeReadonly</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="nx">readonly</span> <span class="p">[</span><span class="nx">p</span> <span class="k">in</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="p">]:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="c1">// readonly</span>
+  <span class="p">}</span>
+  <span class="nx">type</span> <span class="nx">MappedProduct</span> <span class="o">=</span> <span class="nx">MakeReadonly</span><span class="o">&lt;</span><span class="nx">Product</span><span class="o">&gt;</span><span class="p">;</span>
+
+  <span class="c1">// 等价于</span>
+  <span class="c1">// type MappedProduct = {</span>
+  <span class="c1">//     readonly name: string;</span>
+  <span class="c1">//     readonly price: number;</span>
+  <span class="c1">//     readonly getPrice: () =&gt; number;</span>
+  <span class="c1">// }</span>
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>去除readonly特性</p>
+
+        <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">type</span> <span class="nx">Product</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">readonly</span> <span class="na">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
+    <span class="nx">readonly</span> <span class="na">price</span><span class="p">:</span> <span class="nx">number</span><span class="p">;</span>
+    <span class="nx">readonly</span> <span class="na">getPrice</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">number</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="nx">type</span> <span class="nx">MakeReadWrite</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">-</span><span class="nx">readonly</span> <span class="p">[</span><span class="nx">p</span> <span class="k">in</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="p">]:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="c1">// -readonly</span>
+ <span class="p">}</span>
+ <span class="nx">type</span> <span class="nx">MappedProduct</span> <span class="o">=</span> <span class="nx">MakeReadWrite</span><span class="o">&lt;</span><span class="nx">Product</span><span class="o">&gt;</span><span class="p">;</span>
+
+ <span class="c1">// 等价于</span>
+ <span class="c1">// type MappedProduct = {</span>
+ <span class="c1">//     name: string;</span>
+ <span class="c1">//     price: number;</span>
+ <span class="c1">//     getPrice: () =&gt; number;</span>
+ <span class="c1">// }</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="44-映射指定的属性">4.4. 映射指定的属性</h3>
+<ul>
+  <li>配合 <code class="language-plaintext highlighter-rouge">keyof</code> 索引类型查询，可以只映射指定的部分属性,参考内置类型 <code class="language-plaintext highlighter-rouge">Pick&lt;T,K extends keyof T&gt;</code></li>
+</ul>
+
+<h4 id="441-示例">4.4.1. 示例</h4>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">type</span> <span class="nx">Product</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
+    <span class="nl">price</span><span class="p">:</span> <span class="nx">number</span><span class="p">;</span>
+    <span class="nl">getPrice</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">number</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// 等同于 内置类型Pick&lt;T,K extends keyof T&gt;</span>
+<span class="nx">type</span> <span class="nx">SelectProperties</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">K</span> <span class="kd">extends</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">// K 只能是T类型中属性的名字的联合</span>
+    <span class="p">[</span><span class="nx">p</span> <span class="k">in</span> <span class="nx">K</span><span class="p">]:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="nx">type</span> <span class="nx">NamePrice</span> <span class="o">=</span> <span class="nx">SelectProperties</span><span class="o">&lt;</span><span class="nx">Product</span><span class="p">,</span> <span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="o">|</span><span class="dl">'</span><span class="s1">price</span><span class="dl">'</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="c1">// 等价于</span>
+<span class="c1">// type NamePrice = {</span>
+<span class="c1">//     name: string;</span>
+<span class="c1">//     price: number;</span>
+<span class="c1">// }</span>
+</code></pre></div></div>
+
+<h3 id="45-在单个类型映射中合并以上的变换">4.5. 在单个类型映射中合并以上的变换</h3>
+<ul>
+  <li><a href="#43-改变原类型属性的可选性和可变性">4.3</a> 和 <a href="#44-映射指定的属性">4.4</a> 章节涉及的特性可以合并使用</li>
+</ul>
+
+<h4 id="451-示例">4.5.1. 示例</h4>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">type</span> <span class="nx">Product</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
+    <span class="nl">price</span><span class="p">:</span> <span class="nx">number</span><span class="p">;</span>
+    <span class="nl">getPrice</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">number</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 自定义的映射</span>
+<span class="nx">type</span> <span class="nx">CustomMapped</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">K</span> <span class="kd">extends</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">readonly</span> <span class="p">[</span><span class="nx">P</span> <span class="k">in</span> <span class="nx">K</span><span class="p">]?:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">P</span><span class="p">]</span>
+<span class="p">};</span>
+<span class="c1">// 上面的映射等同于下面用内置类型组合的映射</span>
+<span class="nx">type</span> <span class="nx">BuiltInMapped</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">K</span> <span class="kd">extends</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">Readonly</span><span class="o">&lt;</span><span class="nx">Partial</span><span class="o">&lt;</span><span class="nx">Pick</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">K</span><span class="o">&gt;&gt;&gt;</span><span class="p">;</span>
+
+<span class="nx">type</span> <span class="nx">type1</span> <span class="o">=</span> <span class="nx">CustomMapped</span><span class="o">&lt;</span><span class="nx">Product</span><span class="p">,</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nx">type</span> <span class="nx">type2</span> <span class="o">=</span> <span class="nx">BuiltInMapped</span><span class="o">&lt;</span><span class="nx">Product</span><span class="p">,</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="c1">// type type1 = type2 = {</span>
+<span class="c1">//     readonly name?: string;</span>
+<span class="c1">// }</span>
+</code></pre></div></div>
+
+<h3 id="46-使用类型映射创建新的类型">4.6. 使用类型映射创建新的类型</h3>
+<ul>
+  <li>以上的例子都是不改变原有类型的属性的类型的，本节讲解如何使用类型映射创建具有相同属性名称但是不同属性类型的新类型</li>
+  <li>参考内置类型<code class="language-plaintext highlighter-rouge">Record&lt;K extends keyof any, T&gt;</code></li>
+</ul>
+
+<h4 id="461-示例">4.6.1. 示例</h4>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">type</span> <span class="nx">Product</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
+    <span class="nl">price</span><span class="p">:</span> <span class="nx">number</span><span class="p">;</span>
+    <span class="nl">getPrice</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">number</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">type</span> <span class="nx">CustomMapped</span><span class="o">&lt;</span><span class="nx">K</span> <span class="kd">extends</span> <span class="nx">keyof</span> <span class="nx">any</span><span class="p">,</span> <span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">// 等同于内置类型Record&lt;K extends keyof any, T&gt;</span>
+    <span class="p">[</span><span class="nx">P</span> <span class="k">in</span> <span class="nx">K</span><span class="p">]:</span> <span class="nx">T</span> <span class="c1">// K类型里的属性的类型都是T</span>
+<span class="p">};</span>
+
+<span class="nx">type</span> <span class="nx">type1</span> <span class="o">=</span> <span class="nx">CustomMapped</span><span class="o">&lt;</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="o">|</span><span class="dl">'</span><span class="s1">price</span><span class="dl">'</span><span class="p">,</span> <span class="nb">Object</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nx">type</span> <span class="nx">type2</span> <span class="o">=</span> <span class="nx">Record</span><span class="o">&lt;</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="o">|</span><span class="dl">'</span><span class="s1">price</span><span class="dl">'</span><span class="p">,</span> <span class="nb">Object</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="c1">// type type1 = type2 = {</span>
+<span class="c1">//     name: Object;</span>
+<span class="c1">//     price: Object;</span>
+<span class="c1">// }</span>
+</code></pre></div></div>
+
+<h2 id="5-条件类型">5. 条件类型</h2>
+<ul>
+  <li>条件类型是包含泛型参数的表达式</li>
+</ul>
+
+<h3 id="51-基本语法示例">5.1. 基本语法示例</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">type</span> <span class="nx">ConditionalType</span><span class="o">&lt;</span><span class="nx">T</span> <span class="kd">extends</span> <span class="nx">boolean</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kd">extends</span> <span class="kc">true</span> <span class="p">?</span> <span class="nx">string</span> <span class="p">:</span> <span class="nx">number</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">stringValue</span><span class="p">:</span> <span class="nx">ConditionalType</span><span class="o">&lt;</span><span class="kc">true</span><span class="o">&gt;</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">String Value</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// stringValue是string类型的</span>
+<span class="kd">let</span> <span class="nx">numberValue</span><span class="p">:</span> <span class="nx">ConditionalType</span><span class="o">&lt;</span><span class="kc">false</span><span class="o">&gt;</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="c1">// numberValue是number类型的</span>
+<span class="kd">let</span> <span class="nx">mismatchCheck</span><span class="p">:</span> <span class="nx">ConditionalType</span><span class="o">&lt;</span><span class="kc">false</span><span class="o">&gt;</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">String Value</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// Error：Type '"String Value"' is not assignable to type 'number'.ts(2322)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/TypeScript学习笔记/Essential-TypeScript/conditional_type.png" alt="conditional_type" /></p>
+
+<h3 id="52-内嵌的条件类型">5.2. 内嵌的条件类型</h3>
+<ul>
+  <li>一个条件类型中可以内嵌另一个条件类型</li>
+</ul>
+
+<h4 id="521-示例">5.2.1. 示例</h4>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">type</span> <span class="nx">ConditionalType</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">London</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">Bob</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">Kayak</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">type</span> <span class="nx">NestedConditionalType</span><span class="o">&lt;</span><span class="nx">T</span> <span class="kd">extends</span> <span class="nx">ConditionalType</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kd">extends</span> <span class="dl">"</span><span class="s2">London</span><span class="dl">"</span> <span class="p">?</span> <span class="nx">City</span> <span class="p">:</span> <span class="nx">T</span> <span class="kd">extends</span> <span class="dl">"</span><span class="s2">Bob</span><span class="dl">"</span> <span class="p">?</span> <span class="nx">Person</span> <span class="p">:</span> <span class="nx">Product</span><span class="p">;</span>
+
+<span class="kd">let</span> <span class="nx">firstVal</span><span class="p">:</span> <span class="nx">NestedConditionalType</span><span class="o">&lt;</span><span class="dl">"</span><span class="s2">London</span><span class="dl">"</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">City</span><span class="p">(</span><span class="dl">"</span><span class="s2">London</span><span class="dl">"</span><span class="p">,</span> <span class="mi">8136000</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">secondVal</span><span class="p">:</span> <span class="nx">NestedConditionalType</span><span class="o">&lt;</span><span class="dl">"</span><span class="s2">Bob</span><span class="dl">"</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">"</span><span class="s2">Bob</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">London</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">thirdVal</span><span class="p">:</span> <span class="nx">NestedConditionalType</span><span class="o">&lt;</span><span class="dl">"</span><span class="s2">Kayak</span><span class="dl">"</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Product</span><span class="p">(</span><span class="dl">"</span><span class="s2">Kayak</span><span class="dl">"</span><span class="p">,</span> <span class="mi">275</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="53-在泛型类中使用条件类型">5.3. 在泛型类中使用条件类型</h3>
+<ul>
+  <li>条件类型可以用来表达方法或函数的参数类型和返回值类型的关系</li>
+  <li>这是除了<a href="/notes/typescript/essential-ts/2019-06-18-04.%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC.html#4-重载函数类型overloading-function-types">函数类型重载</a>之外的另一种可选择的方式</li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">type</span> <span class="nx">StringOrNumber</span><span class="o">&lt;</span><span class="nx">T</span> <span class="kd">extends</span> <span class="nx">boolean</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kd">extends</span> <span class="kc">true</span> <span class="p">?</span> <span class="nx">string</span> <span class="p">:</span> <span class="nx">number</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nx">Collection</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kr">private</span> <span class="na">items</span><span class="p">:</span> <span class="nx">T</span><span class="p">[];</span>
+    <span class="kd">constructor</span><span class="p">(...</span><span class="na">initialItems</span><span class="p">:</span><span class="nx">T</span><span class="p">[]){</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">items</span> <span class="o">=</span> <span class="nx">initialItems</span> <span class="o">||</span> <span class="p">[]</span>
+    <span class="p">}</span>
+    <span class="nx">total</span><span class="o">&lt;</span><span class="nx">P</span> <span class="kd">extends</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="p">,</span> <span class="nx">F</span> <span class="kd">extends</span> <span class="nx">boolean</span><span class="o">&gt;</span><span class="p">(</span><span class="na">propName</span><span class="p">:</span> <span class="nx">P</span><span class="p">,</span> <span class="na">format</span><span class="p">:</span> <span class="nx">F</span><span class="p">):</span> <span class="nx">StringOrNumber</span><span class="o">&lt;</span><span class="nx">F</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">totalValue</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">pre</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">pre</span> <span class="o">+</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">val</span><span class="p">[</span><span class="nx">propName</span><span class="p">]),</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="c1">// 目前TypeScript编译器很难将方法和函数返回的值的数据类型关联起来，所以强制断言返回值类型为any以便可以赋给StringOrNumber&lt;F&gt;类型。</span>
+        <span class="k">return</span> <span class="nx">format</span> <span class="p">?</span> <span class="s2">`</span><span class="p">${</span><span class="nx">totalValue</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">4</span><span class="p">)}</span><span class="s2">`</span> <span class="p">:</span> <span class="nx">totalValue</span> <span class="k">as</span> <span class="nx">any</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">products</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Collection</span><span class="o">&lt;</span><span class="nx">Product</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="nx">Product</span><span class="p">(</span><span class="dl">"</span><span class="s2">Kayak</span><span class="dl">"</span><span class="p">,</span> <span class="mi">275</span><span class="p">),</span> <span class="k">new</span> <span class="nx">Product</span><span class="p">(</span><span class="dl">"</span><span class="s2">Lifejacket</span><span class="dl">"</span><span class="p">,</span> <span class="mf">48.95</span><span class="p">));</span>
+<span class="kd">let</span> <span class="nx">totalValue</span> <span class="o">=</span> <span class="nx">products</span><span class="p">.</span><span class="nx">total</span><span class="p">(</span><span class="dl">'</span><span class="s1">price</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span> <span class="c1">// totalValue是string类型的</span>
+<span class="kd">let</span> <span class="nx">totalValue2</span><span class="o">=</span> <span class="nx">products</span><span class="p">.</span><span class="nx">total</span><span class="p">(</span><span class="dl">'</span><span class="s1">price</span><span class="dl">'</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span> <span class="c1">// totalValue2是number类型的</span>
+</code></pre></div></div>
+
+<h3 id="54-使用带有联合类型的条件类型">5.4. 使用带有联合类型的条件类型</h3>
+<ul>
+  <li>当条件类型中的类型参数是联合类型时，tsc会把条件判断分配给联合类型里的每个类型，这称为<strong>分布式条件类型distributive conditional type</strong></li>
+</ul>
+
+<h4 id="541-示例">5.4.1. 示例</h4>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">type</span> <span class="nx">Filter</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">U</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kd">extends</span> <span class="nx">U</span> <span class="p">?</span> <span class="nx">never</span> <span class="p">:</span> <span class="nx">T</span><span class="p">;</span> <span class="c1">// 等同于内置分布式条件类型Exclude&lt;T, U&gt;</span>
+
+<span class="nx">type</span> <span class="nx">filteredUnion</span> <span class="o">=</span> <span class="nx">Filter</span><span class="o">&lt;</span><span class="nx">Product</span><span class="o">|</span><span class="nx">Person</span><span class="p">,</span> <span class="nx">Product</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// filteredUnion是Person类型</span>
+<span class="c1">// 上面的语句等价于下面的。tsc会自动把Filter&lt;T,U&gt;分配给Product|Person里的Product和Person，最后再把两个结果联合起来</span>
+<span class="nx">type</span> <span class="nx">filteredUnion2</span> <span class="o">=</span> <span class="nx">Filter</span><span class="o">&lt;</span><span class="nx">Product</span><span class="p">,</span> <span class="nx">Product</span><span class="o">&gt;</span> <span class="o">|</span> <span class="nx">Filter</span><span class="o">&lt;</span><span class="nx">Person</span><span class="p">,</span> <span class="nx">Product</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// filteredUnion2是never|Person，即Person</span>
+</code></pre></div></div>
+
+<h4 id="542-使用内置的分布式条件类型">5.4.2. 使用内置的分布式条件类型</h4>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Exclude&lt;T, U&gt;</code> This type excludes the types that can be assigned to U from T, equivalent to the Filter&lt;T, U&gt; type in Listing 13-25.</li>
+  <li><code class="language-plaintext highlighter-rouge">Extract&lt;T, U&gt;</code> This type selects the types that can be assigned to U from T.</li>
+  <li><code class="language-plaintext highlighter-rouge">NonNullable&lt;T&gt;</code> This type excludes null and undefined from T.</li>
+</ul>
+
+<h3 id="55-在类型映射中使用条件类型">5.5. 在类型映射中使用条件类型</h3>
+<ul>
+  <li>条件类型可以和类型映射合并起来使用，提供比单独使用各个特性更好的灵活性</li>
+</ul>
+
+<h4 id="551-示例">5.5.1. 示例</h4>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="nx">type</span> <span class="nx">Product</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">name</span><span class="p">:</span> <span class="nx">number</span><span class="p">;</span>   <span class="c1">// name是number类型的属性</span>
+      <span class="nl">price</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
+      <span class="nl">getPrice</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">number</span><span class="p">;</span>
+   <span class="p">}</span>
+
+   <span class="c1">// T类型里的属性类型如果是可以赋给U的，那么就把属性类型改变为V，否则保持不变</span>
+   <span class="nx">type</span> <span class="nx">MappingAndChangeProps</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">U</span><span class="p">,</span> <span class="nx">V</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="p">[</span><span class="nx">p</span> <span class="k">in</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="p">]:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="kd">extends</span> <span class="nx">U</span> <span class="p">?</span> <span class="nx">V</span> <span class="p">:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="c1">// 合并类型映射和条件类型</span>
+   <span class="p">}</span>
+
+   <span class="nx">type</span> <span class="nx">ChangedProduct</span> <span class="o">=</span> <span class="nx">MappingAndChangeProps</span><span class="o">&lt;</span><span class="nx">Product</span><span class="p">,</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">string</span><span class="o">&gt;</span><span class="p">;</span>
+
+   <span class="c1">// 等价于</span>
+   <span class="c1">// type ChangedProduct = {</span>
+   <span class="c1">//     name: string; // name变为了string类型</span>
+   <span class="c1">//     price: string;</span>
+   <span class="c1">//     getPrice: () =&gt; number;</span>
+   <span class="c1">// }</span>
+</code></pre></div></div>
+
+<h3 id="56-标识特定类型的属性">5.6. 标识特定类型的属性</h3>
+<ul>
+  <li>一种常见的需求是，只允许一个对象中特定类型的属性，例如<a href="#53-在泛型类中使用条件类型">5.3章节里的Collection.total方法</a>只希望属性名为 <code class="language-plaintext highlighter-rouge">propName</code> 的属性的类型是 <code class="language-plaintext highlighter-rouge">number</code> 类型，这可以通过合并上几个章节的特性来实现</li>
+</ul>
+
+<h4 id="561-示例">5.6.1. 示例</h4>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Product</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="kr">public</span> <span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="kr">public</span> <span class="nx">price</span><span class="p">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">type</span> <span class="nx">UnionPropNames</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">U</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">// 保留类型T中可以赋给U的属性，并将该属性的类型变为其属性名称字面值类型</span>
+    <span class="p">[</span><span class="nx">p</span> <span class="k">in</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="p">]:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span> <span class="kd">extends</span> <span class="nx">U</span> <span class="p">?</span> <span class="nx">p</span> <span class="p">:</span> <span class="nx">never</span>
+<span class="p">}</span>
+<span class="nx">type</span> <span class="nx">TypesOfProps</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span><span class="p">[</span><span class="nx">keyof</span> <span class="nx">T</span><span class="p">];</span> <span class="c1">// 获取T类型里属性的类型</span>
+
+<span class="kd">function</span> <span class="nx">total</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">P</span> <span class="kd">extends</span> <span class="nx">TypesOfProps</span><span class="o">&lt;</span><span class="nx">UnionPropNames</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">number</span><span class="o">&gt;&gt;&gt;</span><span class="p">(</span><span class="nx">data</span><span class="p">:</span> <span class="nx">T</span><span class="p">[],</span> <span class="nx">propName</span><span class="p">:</span> <span class="nx">P</span><span class="p">):</span> <span class="nx">number</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">data</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">t</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">t</span> <span class="o">+=</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">item</span><span class="p">[</span><span class="nx">propName</span><span class="p">]),</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">products</span> <span class="o">=</span> <span class="p">[</span><span class="k">new</span> <span class="nx">Product</span><span class="p">(</span><span class="dl">"</span><span class="s2">Kayak</span><span class="dl">"</span><span class="p">,</span> <span class="mi">275</span><span class="p">),</span> <span class="k">new</span> <span class="nx">Product</span><span class="p">(</span><span class="dl">"</span><span class="s2">Lifejacket</span><span class="dl">"</span><span class="p">,</span> <span class="mf">48.95</span><span class="p">)];</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">total</span><span class="p">(</span><span class="nx">products</span><span class="p">,</span> <span class="dl">'</span><span class="s1">price</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// total的类型参数被自动推断为&lt;Product, 'price'&gt;</span>
+
+<span class="c1">// 分步讲解</span>
+<span class="c1">// 第一步：</span>
+<span class="nx">type</span> <span class="nx">typeStep1</span> <span class="o">=</span> <span class="nx">UnionPropNames</span><span class="o">&lt;</span><span class="nx">Product</span><span class="p">,</span> <span class="nx">number</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// 等价于 type typeStep1 = {price:"price"}</span>
+<span class="c1">// 第二步：</span>
+<span class="nx">type</span> <span class="nx">typeStep2</span> <span class="o">=</span> <span class="nx">TypesOfProps</span><span class="o">&lt;</span><span class="nx">typeStep1</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// 等价于type typeStep2 = "price"</span>
+
+<span class="c1">// 另外，可以合并UnionPropNames和TypesOfProps</span>
+<span class="nx">type</span> <span class="nx">IdentifyPropsOfSpecificType</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">U</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">UnionPropNames</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">U</span><span class="o">&gt;</span><span class="p">[</span><span class="nx">keyof</span> <span class="nx">T</span><span class="p">];</span>
+</code></pre></div></div>
+
+<h3 id="57-条件类型中推断附加的类型">5.7. 条件类型中推断附加的类型</h3>
+<ul>
+  <li>关键词 <code class="language-plaintext highlighter-rouge">infer</code> 用来推断在条件类型中没有显示提供的类型参数</li>
+  <li><code class="language-plaintext highlighter-rouge">infer</code> 只能用于条件类型，即 <code class="language-plaintext highlighter-rouge">A extends B ? C : D</code></li>
+</ul>
+
+<h4 id="571-示例">5.7.1. 示例</h4>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// infer关键词之后的类型U没有出现在InferedType的类型参数列表中</span>
+<span class="c1">// U会在编译时被tsc推断为某类型，推断的参考是T类型</span>
+<span class="nx">type</span> <span class="nx">InferedType</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kd">extends</span> <span class="p">(</span><span class="nx">infer</span> <span class="nx">U</span><span class="p">)[]</span> <span class="p">?</span> <span class="nx">U</span> <span class="p">:</span> <span class="nx">T</span><span class="p">;</span>
+
+<span class="nx">type</span> <span class="nx">t1</span> <span class="o">=</span> <span class="nx">InferedType</span><span class="o">&lt;</span><span class="nx">number</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// T是number，U被推断为number，结果t1的类型是number</span>
+<span class="nx">type</span> <span class="nx">t2</span> <span class="o">=</span> <span class="nx">InferedType</span><span class="o">&lt;</span><span class="nx">number</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// T是number[]，U被推断为number，结果t2的类型也是number</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/TypeScript学习笔记/Essential-TypeScript/infered_type.png" alt="infered_type" /></p>
+
+<h4 id="572-用法示例">5.7.2. 用法示例</h4>
+<ul>
+  <li>
+    <p>考虑下面的 <code class="language-plaintext highlighter-rouge">getValue</code> 函数，我们的目的是想要达到这种效果：无论参数 <code class="language-plaintext highlighter-rouge">data</code> 是 <code class="language-plaintext highlighter-rouge">Product[]</code> 数组还是 <code class="language-plaintext highlighter-rouge">Product</code> 对象，<code class="language-plaintext highlighter-rouge">propName</code> 的类型都是 <code class="language-plaintext highlighter-rouge">Product</code> 对象的属性名字字面值类型</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">class</span> <span class="nx">Product</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="kr">public</span> <span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="kr">public</span> <span class="nx">price</span><span class="p">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+ <span class="p">}</span>
+
+ <span class="c1">// T如果是某对象（例如Product）的数组，那么U被tsc推断为该对象的类型（即Product），结果是keyof U即keyof Product：Product的属性名称字面值类型</span>
+ <span class="c1">// T如果是某对象（例如Product），那么U也会被tsc推断为Product类型，结果是keyof T即keyof Product，效果和上面情况一样</span>
+ <span class="nx">type</span> <span class="nx">targetKeys</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span> <span class="kd">extends</span> <span class="p">(</span><span class="nx">infer</span> <span class="nx">U</span><span class="p">)[]</span> <span class="p">?</span> <span class="nx">keyof</span> <span class="nx">U</span> <span class="p">:</span> <span class="nx">keyof</span> <span class="nx">T</span><span class="p">;</span>
+
+ <span class="c1">// 无论T是数组还是对象，P extends targetKeys&lt;T&gt;的结果都一样，即对象的属性名称字面值类型</span>
+ <span class="kd">function</span> <span class="nx">getValue</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">P</span> <span class="kd">extends</span> <span class="nx">targetKeys</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="nx">data</span><span class="p">:</span> <span class="nx">T</span><span class="p">,</span> <span class="nx">propName</span><span class="p">:</span> <span class="nx">P</span><span class="p">):</span> <span class="nx">T</span><span class="p">[</span><span class="nx">P</span><span class="p">]</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">data</span><span class="p">))</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="nx">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="nx">propName</span><span class="p">];</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="nx">data</span><span class="p">[</span><span class="nx">propName</span><span class="p">];</span>
+    <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="kd">let</span> <span class="nx">products</span> <span class="o">=</span> <span class="p">[</span><span class="k">new</span> <span class="nx">Product</span><span class="p">(</span><span class="dl">"</span><span class="s2">Kayak</span><span class="dl">"</span><span class="p">,</span> <span class="mi">275</span><span class="p">),</span> <span class="k">new</span> <span class="nx">Product</span><span class="p">(</span><span class="dl">"</span><span class="s2">Lifejacket</span><span class="dl">"</span><span class="p">,</span> <span class="mf">48.95</span><span class="p">)];</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Array Value: </span><span class="p">${</span><span class="nx">getValue</span><span class="p">(</span><span class="nx">products</span><span class="p">,</span> <span class="dl">"</span><span class="s2">price</span><span class="dl">"</span><span class="p">)}</span><span class="s2">`</span><span class="p">);</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Single Total: </span><span class="p">${</span><span class="nx">getValue</span><span class="p">(</span><span class="nx">products</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="dl">"</span><span class="s2">price</span><span class="dl">"</span><span class="p">)}</span><span class="s2">`</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="573-推断函数的类型">5.7.3. 推断函数的类型</h4>
+<ul>
+  <li>tsc还可以推断接受函数类型的泛型里的类型</li>
+</ul>
+
+<h5 id="5731-示例">5.7.3.1. 示例</h5>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="kd">class</span> <span class="nx">Product</span> <span class="p">{</span>
+      <span class="kd">constructor</span><span class="p">(</span><span class="kr">public</span> <span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="kr">public</span> <span class="nx">price</span><span class="p">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+   <span class="p">}</span>
+
+   <span class="c1">// (...args: any) =&gt; infer R表示接受0个或任意多个任意类型参数、返回值为R的函数，其中R需要tsc来推断</span>
+   <span class="c1">// 如果Func可以赋给上面类型的函数，那么就最终的结果就是R类型，否则是never</span>
+   <span class="c1">// tsc提供了一个功能一样的内置条件类型：ReturnType&lt;T&gt;</span>
+   <span class="nx">type</span> <span class="nx">ResultType</span><span class="o">&lt;</span><span class="nx">Func</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">Func</span> <span class="kd">extends</span> <span class="p">(...</span><span class="nx">args</span><span class="p">:</span> <span class="nx">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">infer</span> <span class="nx">R</span> <span class="p">?</span> <span class="nx">R</span> <span class="p">:</span> <span class="nx">never</span><span class="p">;</span>
+
+   <span class="c1">// 从T[]数组里提取每个元素的某个属性值，并把这些属性值合成一个数组</span>
+   <span class="c1">// mappingArray接受T类型的数组和一个回调函数，并返回该回调函数返回值类型的数组类型</span>
+   <span class="kd">function</span> <span class="nx">mappingArray</span><span class="o">&lt;</span><span class="nx">T</span><span class="p">,</span> <span class="nx">Func</span> <span class="kd">extends</span> <span class="p">(</span><span class="nx">arg</span><span class="p">:</span> <span class="nx">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">any</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">data</span><span class="p">:</span> <span class="nx">T</span><span class="p">[],</span> <span class="nx">func</span><span class="p">:</span> <span class="nx">Func</span><span class="p">):</span> <span class="nx">ResultType</span><span class="o">&lt;</span><span class="nx">Func</span><span class="o">&gt;</span><span class="p">[]</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">data</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="nx">func</span><span class="p">(</span><span class="nx">item</span><span class="p">));</span>
+   <span class="p">}</span>
+
+   <span class="kd">let</span> <span class="nx">cbFunc_selectName</span> <span class="o">=</span> <span class="p">(</span><span class="nx">p</span><span class="p">:</span> <span class="nx">Product</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// 选取Product的name属性值</span>
+
+   <span class="kd">let</span> <span class="nx">products</span> <span class="o">=</span> <span class="p">[</span><span class="k">new</span> <span class="nx">Product</span><span class="p">(</span><span class="dl">"</span><span class="s2">Kayak</span><span class="dl">"</span><span class="p">,</span> <span class="mi">275</span><span class="p">),</span> <span class="k">new</span> <span class="nx">Product</span><span class="p">(</span><span class="dl">"</span><span class="s2">Lifejacket</span><span class="dl">"</span><span class="p">,</span> <span class="mf">48.95</span><span class="p">)];</span>
+   <span class="kd">let</span> <span class="nx">names</span> <span class="o">=</span> <span class="nx">mappingArray</span><span class="p">(</span><span class="nx">products</span><span class="p">,</span> <span class="nx">cbFunc_selectName</span><span class="p">);</span> <span class="c1">// names的类型是string[]</span>
+   <span class="nx">names</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">name</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Name: </span><span class="p">${</span><span class="nx">name</span><span class="p">}</span><span class="s2">`</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h5 id="5732-处理函数的内置的推断类型">5.7.3.2. 处理函数的内置的推断类型</h5>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Parameters&lt;T&gt;</code> This conditional type selects the types of each function parameter, expressed as a tuple.</li>
+  <li><code class="language-plaintext highlighter-rouge">ReturnType&lt;T&gt;</code> This conditional type selects the function result type, equivalent to <code class="language-plaintext highlighter-rouge">ResultType&lt;Func&gt;</code> in previous example.</li>
+  <li><code class="language-plaintext highlighter-rouge">ConstructorParameters&lt;T&gt;</code> The conditional type selects the types of each parameter of a <strong>constructor</strong> function, expressed as a tuple, as demonstrated after the table.</li>
+  <li><code class="language-plaintext highlighter-rouge">InstanceType&lt;T&gt;</code> This conditional type returns the result type of a <strong>constructor</strong> function.</li>
+</ul>
+
+<h5 id="5733-关于构造器函数的类型推断">5.7.3.3. 关于构造器函数的类型推断</h5>
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ConstructorParameters&lt;T&gt;</code> 和 <code class="language-plaintext highlighter-rouge">InstanceType&lt;T&gt;</code> 在构造器函数上面进行类型推断</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">class</span> <span class="nx">Product</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="kr">public</span> <span class="nx">id</span><span class="p">:</span> <span class="nx">number</span><span class="p">,</span> <span class="kr">public</span> <span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="kr">public</span> <span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="kr">public</span> <span class="nx">age</span><span class="p">:</span> <span class="nx">number</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="c1">// 表示任意格式的构造器函数类型</span>
+ <span class="nx">type</span> <span class="nx">Constructor</span> <span class="o">=</span> <span class="k">new</span> <span class="p">(...</span><span class="nx">args</span><span class="p">:</span> <span class="nx">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">any</span><span class="p">;</span>
+
+ <span class="kd">function</span> <span class="nx">makeObject</span><span class="o">&lt;</span><span class="nx">T</span> <span class="kd">extends</span> <span class="nx">Constructor</span><span class="o">&gt;</span><span class="p">(</span><span class="kd">constructor</span><span class="p">:</span> <span class="nx">T</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">:</span> <span class="nx">ConstructorParameters</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">):</span> <span class="nx">InstanceType</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="kd">constructor</span><span class="p">(...</span><span class="nx">args</span> <span class="k">as</span> <span class="nx">any</span><span class="p">[]);</span>
+ <span class="p">}</span>
+ <span class="kd">let</span> <span class="na">prod</span><span class="p">:</span> <span class="nx">Product</span> <span class="o">=</span> <span class="nx">makeObject</span><span class="p">(</span><span class="nx">Product</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Kayak</span><span class="dl">"</span><span class="p">);</span>
+ <span class="kd">let</span> <span class="na">city</span><span class="p">:</span> <span class="nx">Person</span> <span class="o">=</span> <span class="nx">makeObject</span><span class="p">(</span><span class="nx">Person</span><span class="p">,</span> <span class="dl">"</span><span class="s2">John</span><span class="dl">"</span><span class="p">,</span> <span class="mi">18</span><span class="p">);</span>
+ <span class="p">[</span><span class="nx">prod</span><span class="p">,</span> <span class="nx">city</span><span class="p">].</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Name: </span><span class="p">${</span><span class="nx">item</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">`</span><span class="p">));</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<hr />
+
+<p>接下来我们学习本章最后一节——<a href="/notes/typescript/essential-ts/2019-07-14-03.%E6%B3%9B%E5%9E%8B%E8%BF%AD%E4%BB%A3%E5%99%A8.html">泛型迭代器（Generic Iterators）</a>。</p>
+</div>
+	</article>
+</div><!-- Footer -->
+<div id="footer" style="margin-bottom: 0;">
+  
+  <!-- Copyright -->
+  <ul class="copyright">
+    
+      <li>&copy;让IT更简单点. All rights reserved.</li>
+    
+    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    <li>Jekyll integration: <a href="https://chrisbobbe.github.io/">Chris Bobbe</a></li>
+  </ul>
+  
+</div></body>
+</html>

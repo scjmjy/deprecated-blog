@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<!--
+Prologue by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Jekyll integration by Chris Bobbe | chrisbobbe.github.io
+-->
+<html><head><!-- Robots -->
+  <meta name="robots" content="index, follow" /><link rel="canonical" href="http://localhost:4000/projects/webapp/simple-products-list/2019-07-26-05.%E5%88%9B%E5%BB%BA%E5%B8%A6%E6%9C%89%E5%88%86%E7%B1%BB%E5%8A%9F%E8%83%BD%E7%9A%84%E5%95%86%E5%93%81%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2.html" /><!-- Title, description, author --><title>05.创建带有分类功能的商品列表页面 | 让IT更简单点 - 一个有信仰的IT爱好者</title>
+  <meta name="description" content="Ronnie的个人网站， 旨在提供清晰易懂的编程教学" />
+  <meta name="author" content="Ronnie" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="05.创建带有分类功能的商品列表页面 | 让IT更简单点 - 一个有信仰的IT爱好者" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://localhost:4000/assets/images/avatar.png" />
+  <meta property="og:url" content="http://localhost:4000/projects/webapp/simple-products-list/2019-07-26-05.%E5%88%9B%E5%BB%BA%E5%B8%A6%E6%9C%89%E5%88%86%E7%B1%BB%E5%8A%9F%E8%83%BD%E7%9A%84%E5%95%86%E5%93%81%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2.html" />
+  <meta property="og:site_name" content="让IT更简单点" />
+  <meta property="og:description" content="Ronnie的个人网站， 旨在提供清晰易懂的编程教学" />
+  
+  <!-- Styles -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js" defer></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!-- <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.1.0/css/all.css" rel="stylesheet"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.1.0/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/md-hl-github.css">
+  <link rel="stylesheet" href="/assets/css/md-layout-github.css">
+
+  <!-- Scripts -->
+  <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js" defer></script>
+  <script src="/assets/js/jquery.scrolly.min.js" defer></script>
+  <script src="/assets/js/jquery.scrollzer.min.js" defer></script>
+  <script src="/assets/js/skel.min.js" defer></script>
+  <script src="/assets/js/util.js" defer></script>
+  <!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js" defer></script><![endif]-->
+  <script src="/assets/js/main.js" defer></script>
+
+</head><body><!-- Header -->
+<div id="header">
+  <div class="top"><!-- Logo -->
+<div id="logo">
+  <a href="http://localhost:4000/" id="home-link">
+    <span class="image avatar48"><img src="/assets/images/avatar.png" alt="Avatar of Ronnie" /></span>
+    <h1 id="title">让IT更简单点</h1>
+    <p>一个有信仰的IT爱好者</p>
+  </a>
+</div><!-- Nav -->
+<nav id="nav">
+  <ul><!-- <li><a href="http://localhost:4000/" id="主页-link"> -->
+          <li><a href="/" id="主页-link">
+            <span class="icon fa-home">主页</span>
+          </a></li><!-- <li><a href="http://localhost:4000/blog.html" id="文章-link"> -->
+          <li><a href="/blog.html" id="文章-link">
+            <span class="icon fa-link">文章</span>
+          </a></li></ul>
+</nav></div>
+  <div class="bottom"><!-- Social Icons -->
+<ul class="icons"><li><a href="https://github.com/scjmjy" class="icon-b fa-github"><span class="label">GitHub</span></a></li><li><a href="mailto:mjyok12345@gmail.com" class="icon fa-envelope"><span class="label">Email</span></a></li></ul>
+</div>
+</div>
+<!-- Main -->
+<div id="main">
+	<!-- Post -->
+	<article class="markdown-body">
+	  <div class="container">
+			<header>
+				<h2>05.创建带有分类功能的商品列表页面</h2>
+				<p>Ronnie, 26 July 2019</p>
+			</header><h2 id="创建显示单个商品详情的类">创建显示单个商品详情的类</h2>
+
+<p>创建文件：src/view/ProductItem.tsx</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Product</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../data/entries</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">createElement</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./jsxFactory</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="cm">/**
+ * 使用 JSX 渲染单个Product
+ */</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">ProductItem</span> <span class="p">{</span>
+    <span class="kr">private</span> <span class="nx">quantity</span><span class="p">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nl">props</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">product</span><span class="p">:</span> <span class="nx">Product</span><span class="p">,</span>
+        <span class="na">callback</span><span class="p">:</span> <span class="p">(</span><span class="na">product</span><span class="p">:</span> <span class="nx">Product</span><span class="p">,</span> <span class="na">quantity</span><span class="p">:</span> <span class="nx">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+    <span class="p">}</span>
+    <span class="nx">getContent</span><span class="p">():</span> <span class="nx">HTMLElement</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">card m-1 p-1 bg-light</span><span class="dl">"</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">h4</span> <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">text-primary</span><span class="dl">"</span><span class="o">&gt;</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">product</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span>
+                <span class="o">&lt;</span><span class="nx">span</span> <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">badge badge-pill badge-primary float-right</span><span class="dl">"</span><span class="o">&gt;</span>
+                    <span class="err">￥</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">product</span><span class="p">.</span><span class="nx">price</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">)}</span>
+                <span class="o">&lt;</span><span class="sr">/span</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="sr">/h4</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">card-text bg-white p-1</span><span class="dl">"</span><span class="o">&gt;</span>
+                <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">product</span><span class="p">.</span><span class="nx">description</span><span class="p">}</span>
+                <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">btn btn-success btn-sm float-right</span><span class="dl">"</span>
+                    <span class="nx">onclick</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleAddToCart</span><span class="p">}</span> <span class="o">&gt;</span>
+                    <span class="nx">Add</span> <span class="nx">To</span> <span class="nx">Cart</span>
+                        <span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span>                <span class="o">&lt;</span><span class="nx">select</span> <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">form-control-inline float-right m-1</span><span class="dl">"</span>
+                    <span class="nx">onchange</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleQuantityChange</span><span class="p">}</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">option</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                    <span class="o">&lt;</span><span class="nx">option</span><span class="o">&gt;</span><span class="mi">2</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                    <span class="o">&lt;</span><span class="nx">option</span><span class="o">&gt;</span><span class="mi">3</span><span class="o">&lt;</span><span class="sr">/option</span><span class="err">&gt;
+</span>                <span class="o">&lt;</span><span class="sr">/select</span><span class="err">&gt;
+</span>            <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">}</span>
+
+    <span class="c1">// 使用箭头函数确保函数体内的 this 是ProductItem对象</span>
+    <span class="nx">handleAddToCart</span> <span class="o">=</span> <span class="p">():</span> <span class="k">void</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">callback</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">product</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">quantity</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 使用箭头函数确保函数体内的 this 是ProductItem对象</span>
+    <span class="nx">handleQuantityChange</span> <span class="o">=</span> <span class="p">(</span><span class="na">ev</span><span class="p">:</span> <span class="nx">Event</span><span class="p">):</span> <span class="k">void</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">quantity</span> <span class="o">=</span> <span class="nb">Number</span><span class="p">((</span><span class="nx">ev</span><span class="p">.</span><span class="nx">target</span> <span class="k">as</span> <span class="nx">HTMLSelectElement</span><span class="p">).</span><span class="nx">value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="创建显示分类列表的类">创建显示分类列表的类</h2>
+
+<p>创建文件：src/view/CategoryList.tsx</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">createElement</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./jsxFactory</span><span class="dl">"</span>
+
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">CategoryList</span> <span class="p">{</span>
+    <span class="nl">props</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">categories</span><span class="p">:</span> <span class="nx">string</span><span class="p">[],</span>
+        <span class="na">selectedCategory</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+        <span class="na">callback</span><span class="p">:</span> <span class="p">(</span><span class="na">selected</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+    <span class="p">}</span>
+
+    <span class="nx">getContent</span><span class="p">():</span> <span class="nx">HTMLElement</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+                   <span class="p">{[</span><span class="dl">'</span><span class="s1">所有分类</span><span class="dl">'</span><span class="p">,</span> <span class="p">...</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">categories</span><span class="p">].</span><span class="nx">map</span><span class="p">(</span><span class="nx">category</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">createCategoryBtn</span><span class="p">(</span><span class="nx">category</span><span class="p">))}</span>
+               <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">}</span>
+
+    <span class="nx">createCategoryBtn</span><span class="p">(</span><span class="nx">category</span><span class="p">:</span> <span class="nx">string</span><span class="p">):</span> <span class="nx">HTMLElement</span> <span class="p">{</span>
+        <span class="kd">const</span> <span class="nx">selected</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">selectedCategory</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="p">?</span> <span class="dl">'</span><span class="s1">所有分类</span><span class="dl">'</span> <span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">selectedCategory</span><span class="p">;</span>
+        <span class="kd">const</span> <span class="nx">btnBgCls</span> <span class="o">=</span> <span class="nx">selected</span> <span class="o">===</span> <span class="nx">category</span> <span class="p">?</span> <span class="dl">'</span><span class="s1">bg-primary</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">bg-light</span><span class="dl">'</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="s2">`btn btn-block </span><span class="p">${</span><span class="nx">btnBgCls</span><span class="p">}</span><span class="s2">`</span><span class="p">}</span> <span class="nx">onclick</span><span class="o">=</span><span class="p">{()</span><span class="o">=&gt;</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">callback</span><span class="p">(</span><span class="nx">category</span><span class="p">)}</span><span class="o">&gt;</span>
+                    <span class="p">{</span><span class="nx">category</span><span class="p">}</span>
+               <span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="创建显示所有商品列表的类">创建显示所有商品列表的类</h2>
+
+<p>创建文件：src/view/ProductList.tsx</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Product</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../data/entries</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">CategoryList</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./CategoryList</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">createElement</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./jsxFactory</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">ProductItem</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./ProductItem</span><span class="dl">"</span><span class="p">;</span>
+<span class="cm">/**
+ * 带有分类功能的所有商品列表类
+ */</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">ProductList</span> <span class="p">{</span>
+    <span class="nl">props</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">products</span><span class="p">:</span> <span class="nx">Product</span><span class="p">[],</span>
+        <span class="na">categories</span><span class="p">:</span> <span class="nx">string</span><span class="p">[],</span>
+        <span class="na">selectedCategory</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+        <span class="na">addToOrderCallback</span><span class="p">:</span> <span class="p">(</span><span class="na">product</span><span class="p">:</span> <span class="nx">Product</span><span class="p">,</span> <span class="na">quantity</span><span class="p">:</span> <span class="nx">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">,</span>
+        <span class="na">filterCallback</span><span class="p">:</span> <span class="p">(</span><span class="na">category</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+    <span class="p">}</span>
+
+    <span class="nx">getContent</span><span class="p">():</span> <span class="nx">HTMLElement</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">caontainer-fluid</span><span class="dl">"</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">row</span><span class="dl">"</span> <span class="nx">style</span><span class="o">=</span><span class="dl">"</span><span class="s2">margin:0</span><span class="dl">"</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">col-3 p-2</span><span class="dl">"</span><span class="o">&gt;</span>
+                            <span class="o">&lt;</span><span class="nx">CategoryList</span> <span class="nx">categories</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">categories</span><span class="p">}</span>
+                                <span class="nx">selectedCategory</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">selectedCategory</span><span class="p">}</span>
+                                <span class="nx">callback</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">filterCallback</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>                        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>                        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="dl">"</span><span class="s2">col-9 p-2</span><span class="dl">"</span><span class="o">&gt;</span>
+                            <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">products</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">prod</span><span class="o">=&gt;</span><span class="p">{</span>
+                                <span class="k">return</span> <span class="o">&lt;</span><span class="nx">ProductItem</span> <span class="nx">product</span><span class="o">=</span><span class="p">{</span><span class="nx">prod</span><span class="p">}</span>
+                                                    <span class="nx">callback</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">addToOrderCallback</span><span class="p">}</span><span class="sr">/</span><span class="err">&gt;
+</span>                            <span class="p">})</span> <span class="p">}</span>
+                        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>                    <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>               <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="更新-srcviewjsxdisplaytsx">更新 src/view/JsxDisplay.tsx</h2>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">createElement</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./jsxFactory</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Product</span><span class="p">,</span> <span class="nx">Order</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../data/entries</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">AbstractDataSource</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../data/AbstractDataSource</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">ProductList</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./ProductList</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">JsxDisplay</span> <span class="p">{</span>
+    <span class="kr">private</span> <span class="nx">containerItem</span><span class="p">:</span> <span class="nx">HTMLElement</span><span class="p">;</span>
+    <span class="kr">private</span> <span class="nx">selectedCategory</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
+
+    <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">containerItem</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">div</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nl">props</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">dataSource</span><span class="p">:</span> <span class="nx">AbstractDataSource</span>
+    <span class="p">}</span>
+
+    <span class="k">async</span> <span class="nx">getContent</span><span class="p">():</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">HTMLElement</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">updateContent</span><span class="p">();</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">containerItem</span><span class="p">;</span>
+
+    <span class="p">}</span>
+
+    <span class="k">async</span> <span class="nx">updateContent</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">products</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">dataSource</span><span class="p">.</span><span class="nx">getProducts</span><span class="p">(</span><span class="dl">'</span><span class="s1">id</span><span class="dl">'</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">selectedCategory</span><span class="p">);</span>
+        <span class="kd">let</span> <span class="nx">categories</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">dataSource</span><span class="p">.</span><span class="nx">getCategories</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">containerItem</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+
+        <span class="kd">let</span> <span class="nx">content</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">ProductList</span> <span class="nx">products</span><span class="o">=</span><span class="p">{</span><span class="nx">products</span><span class="p">}</span>
+                <span class="nx">categories</span><span class="o">=</span><span class="p">{</span><span class="nx">categories</span><span class="p">}</span>
+                <span class="nx">selectedCategory</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">selectedCategory</span><span class="p">}</span>
+                <span class="nx">addToOrderCallback</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">addToOrder</span><span class="p">}</span>
+                <span class="nx">filterCallback</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">selectCategory</span><span class="p">}</span>
+            <span class="sr">/</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">containerItem</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
+
+        <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="dl">'</span><span class="s1">Content is updated</span><span class="dl">'</span><span class="p">);</span>
+        
+    <span class="p">}</span>
+
+    <span class="nx">addToOrder</span> <span class="o">=</span> <span class="p">(</span><span class="na">product</span><span class="p">:</span> <span class="nx">Product</span><span class="p">,</span> <span class="na">quantity</span><span class="p">:</span> <span class="nx">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">dataSource</span><span class="p">.</span><span class="nx">order</span><span class="p">.</span><span class="nx">addProduct</span><span class="p">(</span><span class="nx">product</span><span class="p">,</span> <span class="nx">quantity</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">updateContent</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nx">selectCategory</span> <span class="o">=</span> <span class="p">(</span><span class="na">selected</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">selectedCategory</span> <span class="o">=</span> <span class="nx">selected</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">所有分类</span><span class="dl">'</span> <span class="p">?</span> <span class="kc">undefined</span> <span class="p">:</span> <span class="nx">selected</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">updateContent</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="更新-srcindexts">更新 src/index.ts</h2>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">LocalDataSource</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./data/LocalDataSource</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">JsxDisplay</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./view/JsxDisplay</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// 使用 JSX 渲染页面</span>
+<span class="k">import</span> <span class="dl">"</span><span class="s2">bootstrap/dist/css/bootstrap.css</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">dataSource</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">LocalDataSource</span><span class="p">();</span>
+
+<span class="kd">function</span> <span class="nx">displayProducts</span><span class="p">():</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">HTMLElement</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">jsxDisplay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">JsxDisplay</span><span class="p">();</span>
+    <span class="nx">jsxDisplay</span><span class="p">.</span><span class="nx">props</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">dataSource</span><span class="p">:</span> <span class="nx">dataSource</span>
+    <span class="p">};</span>
+
+    <span class="k">return</span> <span class="nx">jsxDisplay</span><span class="p">.</span><span class="nx">getContent</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// 确保在浏览器完成页面加载之后再把商品信息显示到页面上</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">complete</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">displayProducts</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">element</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="kd">const</span> <span class="nx">elementApp</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">app</span><span class="dl">'</span><span class="p">);</span>
+            <span class="nx">elementApp</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+            <span class="nx">elementApp</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">document.readyState is not complete</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<p>下面我们添加一个用来从远程获取和保持商品信息的 Web Service——<a href="/projects/webapp/simple-products-list/2019-07-27-06.%E6%B7%BB%E5%8A%A0%E5%90%8E%E5%8F%B0%E6%95%B0%E6%8D%AEWebService.html">添加后台数据WebService</a>。</p>
+</div>
+	</article>
+</div><!-- Footer -->
+<div id="footer" style="margin-bottom: 0;">
+  
+  <!-- Copyright -->
+  <ul class="copyright">
+    
+      <li>&copy;让IT更简单点. All rights reserved.</li>
+    
+    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    <li>Jekyll integration: <a href="https://chrisbobbe.github.io/">Chris Bobbe</a></li>
+  </ul>
+  
+</div></body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<!--
+Prologue by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Jekyll integration by Chris Bobbe | chrisbobbe.github.io
+-->
+<html><head><!-- Robots -->
+  <meta name="robots" content="index, follow" /><link rel="canonical" href="http://localhost:4000/projects/webapp/simple-products-list/2019-07-24-03.%E4%BD%BF%E7%94%A8DOM%E6%B8%B2%E6%9F%93%E9%A1%B5%E9%9D%A2.html" /><!-- Title, description, author --><title>03.使用DOM渲染页面 | 让IT更简单点 - 一个有信仰的IT爱好者</title>
+  <meta name="description" content="Ronnie的个人网站， 旨在提供清晰易懂的编程教学" />
+  <meta name="author" content="Ronnie" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="03.使用DOM渲染页面 | 让IT更简单点 - 一个有信仰的IT爱好者" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://localhost:4000/assets/images/avatar.png" />
+  <meta property="og:url" content="http://localhost:4000/projects/webapp/simple-products-list/2019-07-24-03.%E4%BD%BF%E7%94%A8DOM%E6%B8%B2%E6%9F%93%E9%A1%B5%E9%9D%A2.html" />
+  <meta property="og:site_name" content="让IT更简单点" />
+  <meta property="og:description" content="Ronnie的个人网站， 旨在提供清晰易懂的编程教学" />
+  
+  <!-- Styles -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js" defer></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!-- <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.1.0/css/all.css" rel="stylesheet"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.1.0/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/md-hl-github.css">
+  <link rel="stylesheet" href="/assets/css/md-layout-github.css">
+
+  <!-- Scripts -->
+  <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js" defer></script>
+  <script src="/assets/js/jquery.scrolly.min.js" defer></script>
+  <script src="/assets/js/jquery.scrollzer.min.js" defer></script>
+  <script src="/assets/js/skel.min.js" defer></script>
+  <script src="/assets/js/util.js" defer></script>
+  <!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js" defer></script><![endif]-->
+  <script src="/assets/js/main.js" defer></script>
+
+</head><body><!-- Header -->
+<div id="header">
+  <div class="top"><!-- Logo -->
+<div id="logo">
+  <a href="http://localhost:4000/" id="home-link">
+    <span class="image avatar48"><img src="/assets/images/avatar.png" alt="Avatar of Ronnie" /></span>
+    <h1 id="title">让IT更简单点</h1>
+    <p>一个有信仰的IT爱好者</p>
+  </a>
+</div><!-- Nav -->
+<nav id="nav">
+  <ul><!-- <li><a href="http://localhost:4000/" id="主页-link"> -->
+          <li><a href="/" id="主页-link">
+            <span class="icon fa-home">主页</span>
+          </a></li><!-- <li><a href="http://localhost:4000/blog.html" id="文章-link"> -->
+          <li><a href="/blog.html" id="文章-link">
+            <span class="icon fa-link">文章</span>
+          </a></li></ul>
+</nav></div>
+  <div class="bottom"><!-- Social Icons -->
+<ul class="icons"><li><a href="https://github.com/scjmjy" class="icon-b fa-github"><span class="label">GitHub</span></a></li><li><a href="mailto:mjyok12345@gmail.com" class="icon fa-envelope"><span class="label">Email</span></a></li></ul>
+</div>
+</div>
+<!-- Main -->
+<div id="main">
+	<!-- Post -->
+	<article class="markdown-body">
+	  <div class="container">
+			<header>
+				<h2>03.使用DOM渲染页面</h2>
+				<p>Ronnie, 24 July 2019</p>
+			</header><p>本节我们通过 DOM API 把从后端获取的数据在前端HTML页面上展示出来。</p>
+
+<p>本节目录：
+<!-- TOC --></p>
+
+<ul>
+  <li><a href="#1-创建用于操作dom来显示html页面的类">1. 创建用于操作DOM来显示HTML页面的类</a></li>
+  <li><a href="#2-添加对bootstrap-css-样式的支持">2. 添加对Bootstrap CSS 样式的支持</a></li>
+  <li><a href="#3-使用-domdisplay">3. 使用 DomDisplay</a></li>
+</ul>
+
+<!-- /TOC -->
+
+<hr />
+
+<h2 id="1-创建用于操作dom来显示html页面的类">1. 创建用于操作DOM来显示HTML页面的类</h2>
+
+<p>创建文件：src/view/DomDisplay.ts，输入以下代码</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Product</span><span class="p">,</span> <span class="nx">Order</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../data/entries</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">DomDisplay</span> <span class="p">{</span>
+
+    <span class="nl">props</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">products</span><span class="p">:</span> <span class="nx">Product</span><span class="p">[],</span>
+        <span class="na">order</span><span class="p">:</span> <span class="nx">Order</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**
+     * getElementText
+     */</span>
+    <span class="kr">public</span> <span class="nx">getElementText</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">products</span><span class="p">.</span><span class="nx">length</span><span class="p">}</span><span class="s2"> Products, Order total: ￥</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">order</span><span class="p">.</span><span class="nx">totalAmount</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**
+     * getContent
+     */</span>
+    <span class="kr">public</span> <span class="nx">getContent</span><span class="p">():</span> <span class="nx">HTMLElement</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">elem</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">h3</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">elem</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getElementText</span><span class="p">();</span>
+        <span class="nx">elem</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="dl">'</span><span class="s1">bg-primary</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">text-center</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">text-white</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">p-2</span><span class="dl">'</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nx">elem</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="2-添加对bootstrap-css-样式的支持">2. 添加对Bootstrap CSS 样式的支持</h2>
+<ul>
+  <li>上面的代码里，给一个HTMLElement添加了4个类，这些类是在<a href="https://getbootstrap.com/">Bootstrap</a>里定义的</li>
+  <li>因此我们的工程里需要加入对Bootstrap的支持。而且 <strong>webpack</strong> 可以通过CSS加载器打包Bootstrap的CSS文件</li>
+  <li>按 Ctrl+C 停止 WDS，然后运行以下命令来安装Bootstrap和CSS加载器
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">npm install bootstrap@4.3.1</code>
+        <ul>
+          <li><strong>bootstrap包</strong> 包含应用于工程的CSS样式</li>
+        </ul>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">npm install --save-dev css-loader@2.1.1</code></li>
+      <li><code class="language-plaintext highlighter-rouge">npm install --save-dev style-loader@0.23.1</code>
+        <ul>
+          <li><strong>css-loader</strong> 和 <strong>style-loader</strong> 包含处理CSS样式的加载器(两者都是将CSS合并到 webpack bundle 中所必需的)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>修改 <strong>webpack</strong> 配置文件</p>
+
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="c1">// 省略...</span>
+      <span class="na">resolve</span><span class="p">:</span> <span class="p">{</span> <span class="na">extensions</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">.ts</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">.js</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">.css</span><span class="dl">"</span><span class="p">]</span> <span class="p">},</span> <span class="c1">// 添加了对css的打包处理</span>
+      <span class="na">module</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">rules</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span> <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">ts/</span><span class="p">,</span> <span class="na">use</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ts-loader</span><span class="dl">"</span><span class="p">,</span> <span class="na">exclude</span><span class="p">:</span> <span class="sr">/node_modules/</span> <span class="p">},</span>
+              <span class="c1">// 以下是配置处理css的工具和规则</span>
+              <span class="c1">// 由于需要打包 node_modules/bootstrap/***/bootstrap.css，所以不需要 exclude: /node_modules/</span>
+              <span class="p">{</span> <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">css$/</span><span class="p">,</span> <span class="na">use</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">style-loader</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">css-loader</span><span class="dl">"</span><span class="p">]</span> <span class="p">}</span>
+          <span class="p">]</span>
+      <span class="p">},</span>
+      <span class="c1">// 省略...</span>
+  <span class="p">};</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="3-使用-domdisplay">3. 使用 DomDisplay</h2>
+<ul>
+  <li>
+    <p>修改 index.ts 使用 DomDisplay 和 DOM API 把商品信息显示到HTML页面中</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">import</span> <span class="p">{</span> <span class="nx">LocalDataSource</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./data/LocalDataSource</span><span class="dl">"</span><span class="p">;</span>
+  <span class="k">import</span> <span class="p">{</span> <span class="nx">DomDisplay</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./view/DomDisplay</span><span class="dl">"</span><span class="p">;</span>
+  <span class="k">import</span> <span class="dl">"</span><span class="s2">bootstrap/dist/css/bootstrap.css</span><span class="dl">"</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">dataSource</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">LocalDataSource</span><span class="p">();</span>
+
+  <span class="k">async</span> <span class="kd">function</span> <span class="nx">displayProducts</span><span class="p">():</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">HTMLElement</span><span class="o">&gt;</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">allProducts</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">dataSource</span><span class="p">.</span><span class="nx">getProducts</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">);</span>
+
+      <span class="kd">const</span> <span class="nx">domDisplay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DomDisplay</span><span class="p">();</span>
+      <span class="nx">domDisplay</span><span class="p">.</span><span class="nx">props</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="na">products</span><span class="p">:</span> <span class="k">await</span> <span class="nx">dataSource</span><span class="p">.</span><span class="nx">getProducts</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">),</span>
+          <span class="na">order</span><span class="p">:</span> <span class="nx">dataSource</span><span class="p">.</span><span class="nx">order</span>
+      <span class="p">};</span>
+
+      <span class="k">return</span> <span class="nx">domDisplay</span><span class="p">.</span><span class="nx">getContent</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 确保在浏览器完成页面加载之后再把商品信息显示到页面上</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">complete</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">displayProducts</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">element</span> <span class="o">=&gt;</span> <span class="p">{</span>
+              <span class="kd">const</span> <span class="nx">elementApp</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">app</span><span class="dl">'</span><span class="p">);</span>
+              <span class="nx">elementApp</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+              <span class="nx">elementApp</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+          <span class="p">});</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">document.readyState is not complete</span><span class="dl">'</span><span class="p">);</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>打包：<code class="language-plaintext highlighter-rouge">npx webpack</code>
+    <ul>
+      <li>webpack 通过 ts-loader 处理工程里的ts文件</li>
+      <li>webpack 通过 css-laoder 和 style-loader 处理工程里的css文件</li>
+      <li>然后 webpack 把处理后的内容打包进一个 bundle.js 文件中</li>
+      <li>所以 bundle.js 文件里虽然只包含了js代码，但是代码中还包含了css样式内容
+        <ul>
+          <li>这些css样式会在浏览器处理 bundle.js 时通过浏览器提供的 API 来解析</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>运行：<code class="language-plaintext highlighter-rouge">npx webpack-dev-server</code>，结果如下：</p>
+
+    <p><img src="/assets/images/Simple-Products-List/dom-display.png" alt="dom-display" /></p>
+  </li>
+</ul>
+
+<hr />
+
+<p>接下来我们介绍如何使用 TSX 来渲染页面——<a href="/projects/webapp/simple-products-list/2019-07-25-04.%E4%BD%BF%E7%94%A8JSX%E5%88%9B%E5%BB%BAHTML%E5%86%85%E5%AE%B9.html">使用JSX创建HTML内容</a>。</p>
+</div>
+	</article>
+</div><!-- Footer -->
+<div id="footer" style="margin-bottom: 0;">
+  
+  <!-- Copyright -->
+  <ul class="copyright">
+    
+      <li>&copy;让IT更简单点. All rights reserved.</li>
+    
+    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    <li>Jekyll integration: <a href="https://chrisbobbe.github.io/">Chris Bobbe</a></li>
+  </ul>
+  
+</div></body>
+</html>

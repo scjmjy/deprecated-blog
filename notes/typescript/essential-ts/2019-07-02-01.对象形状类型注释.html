@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<!--
+Prologue by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Jekyll integration by Chris Bobbe | chrisbobbe.github.io
+-->
+<html><head><!-- Robots -->
+  <meta name="robots" content="index, follow" /><link rel="canonical" href="http://localhost:4000/notes/typescript/essential-ts/2019-07-02-01.%E5%AF%B9%E8%B1%A1%E5%BD%A2%E7%8A%B6%E7%B1%BB%E5%9E%8B%E6%B3%A8%E9%87%8A.html" /><!-- Title, description, author --><title>01.对象形状类型注释 | 让IT更简单点 - 一个有信仰的IT爱好者</title>
+  <meta name="description" content="Ronnie的个人网站， 旨在提供清晰易懂的编程教学" />
+  <meta name="author" content="Ronnie" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="01.对象形状类型注释 | 让IT更简单点 - 一个有信仰的IT爱好者" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://localhost:4000/assets/images/avatar.png" />
+  <meta property="og:url" content="http://localhost:4000/notes/typescript/essential-ts/2019-07-02-01.%E5%AF%B9%E8%B1%A1%E5%BD%A2%E7%8A%B6%E7%B1%BB%E5%9E%8B%E6%B3%A8%E9%87%8A.html" />
+  <meta property="og:site_name" content="让IT更简单点" />
+  <meta property="og:description" content="Ronnie的个人网站， 旨在提供清晰易懂的编程教学" />
+  
+  <!-- Styles -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js" defer></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!-- <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.1.0/css/all.css" rel="stylesheet"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.1.0/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/md-hl-github.css">
+  <link rel="stylesheet" href="/assets/css/md-layout-github.css">
+
+  <!-- Scripts -->
+  <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js" defer></script>
+  <script src="/assets/js/jquery.scrolly.min.js" defer></script>
+  <script src="/assets/js/jquery.scrollzer.min.js" defer></script>
+  <script src="/assets/js/skel.min.js" defer></script>
+  <script src="/assets/js/util.js" defer></script>
+  <!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js" defer></script><![endif]-->
+  <script src="/assets/js/main.js" defer></script>
+
+</head><body><!-- Header -->
+<div id="header">
+  <div class="top"><!-- Logo -->
+<div id="logo">
+  <a href="http://localhost:4000/" id="home-link">
+    <span class="image avatar48"><img src="/assets/images/avatar.png" alt="Avatar of Ronnie" /></span>
+    <h1 id="title">让IT更简单点</h1>
+    <p>一个有信仰的IT爱好者</p>
+  </a>
+</div><!-- Nav -->
+<nav id="nav">
+  <ul><!-- <li><a href="http://localhost:4000/" id="主页-link"> -->
+          <li><a href="/" id="主页-link">
+            <span class="icon fa-home">主页</span>
+          </a></li><!-- <li><a href="http://localhost:4000/blog.html" id="文章-link"> -->
+          <li><a href="/blog.html" id="文章-link">
+            <span class="icon fa-link">文章</span>
+          </a></li></ul>
+</nav></div>
+  <div class="bottom"><!-- Social Icons -->
+<ul class="icons"><li><a href="https://github.com/scjmjy" class="icon-b fa-github"><span class="label">GitHub</span></a></li><li><a href="mailto:mjyok12345@gmail.com" class="icon fa-envelope"><span class="label">Email</span></a></li></ul>
+</div>
+</div>
+<!-- Main -->
+<div id="main">
+	<!-- Post -->
+	<article class="markdown-body">
+	  <div class="container">
+			<header>
+				<h2>01.对象形状类型注释</h2>
+				<p>Ronnie, 02 July 2019</p>
+			</header><!-- # 对象形状类型注释（Object Shape Type Annotation） -->
+<p>本节学习TypeScript对象的形状类型注释（Object Shape Type Annotation）。</p>
+
+<p>本节目录：
+<!-- TOC --></p>
+
+<ul>
+  <li><a href="#1-基本语法">1. 基本语法</a>
+    <ul>
+      <li><a href="#11-示例">1.1. 示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#2-了解形状类型如何匹配">2. 了解形状类型如何匹配</a>
+    <ul>
+      <li><a href="#21-示例">2.1. 示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#3-不规则形状的可选属性">3. 不规则形状的可选属性</a>
+    <ul>
+      <li><a href="#31-示例">3.1. 示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#4-在形状类型中包含方法">4. 在形状类型中包含方法</a>
+    <ul>
+      <li><a href="#41-示例">4.1. 示例</a></li>
+      <li><a href="#42-避免undefined的函数">4.2. 避免undefined的函数</a></li>
+    </ul>
+  </li>
+  <li><a href="#5-为形状类型使用类型别名">5. 为形状类型使用类型别名</a>
+    <ul>
+      <li><a href="#51-示例">5.1. 示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#6-处理超额属性excess-properties">6. 处理超额属性（Excess Properties）</a>
+    <ul>
+      <li><a href="#61-解决属性超额错误">6.1. 解决属性超额错误</a></li>
+    </ul>
+  </li>
+</ul>
+
+<!-- /TOC -->
+
+<hr />
+
+<h2 id="1-基本语法">1. 基本语法</h2>
+<ul>
+  <li>TypeScript使用<strong>形状类型</strong>来提供对象的类型功能</li>
+  <li>语法：<code class="language-plaintext highlighter-rouge">let obj: { prop1: string, prop2, number}</code></li>
+</ul>
+
+<h3 id="11-示例">1.1. 示例</h3>
+<ul>
+  <li>
+    <p>TypeScript代码：</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">let</span> <span class="nx">hat</span><span class="p">:</span> <span class="p">{</span> <span class="nl">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">price</span><span class="p">:</span> <span class="nx">number</span> <span class="p">}</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hat</span><span class="dl">"</span><span class="p">,</span> <span class="na">price</span><span class="p">:</span> <span class="mi">100</span> <span class="p">};</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>对应的声明文件代码：</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">declare</span> <span class="kd">let</span> <span class="nx">hat</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nl">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
+      <span class="nl">price</span><span class="p">:</span> <span class="nx">number</span><span class="p">;</span>
+  <span class="p">};</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><img src="/assets/images/TypeScript学习笔记/Essential-TypeScript/object_shape_type.png" alt="object_shape_type" /></p>
+
+<h2 id="2-了解形状类型如何匹配">2. 了解形状类型如何匹配</h2>
+<ul>
+  <li>当一个数组里的元素有不同的形状类型时，tsc会使用所有元素共用的形状类型作为最终的形状类型</li>
+</ul>
+
+<h3 id="21-示例">2.1. 示例</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">hat</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hat</span><span class="dl">"</span><span class="p">,</span> <span class="na">price</span><span class="p">:</span> <span class="mi">100</span> <span class="p">};</span>
+<span class="kd">let</span> <span class="nx">gloves</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Gloves</span><span class="dl">"</span> <span class="p">};</span>
+<span class="kd">let</span> <span class="nx">umbrella</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Umbrella</span><span class="dl">"</span><span class="p">,</span> <span class="na">price</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="na">waterproof</span><span class="p">:</span> <span class="kc">true</span> <span class="p">};</span>
+<span class="kd">let</span> <span class="nx">products1</span> <span class="o">=</span> <span class="p">[</span><span class="nx">hat</span><span class="p">];</span>  <span class="c1">// {name:string, price:number}[]</span>
+<span class="kd">let</span> <span class="nx">products2</span> <span class="o">=</span> <span class="p">[</span><span class="nx">hat</span><span class="p">,</span> <span class="nx">gloves</span><span class="p">];</span> <span class="c1">// {name:string}[]</span>
+<span class="kd">let</span> <span class="nx">products3</span> <span class="o">=</span> <span class="p">[</span><span class="nx">hat</span><span class="p">,</span> <span class="nx">umbrella</span><span class="p">];</span> <span class="c1">// {name:string, price:number}[]</span>
+</code></pre></div></div>
+
+<h2 id="3-不规则形状的可选属性">3. 不规则形状的可选属性</h2>
+<ul>
+  <li>使用 <code class="language-plaintext highlighter-rouge">?</code> 来表示一个属性是可选的</li>
+</ul>
+
+<h3 id="31-示例">3.1. 示例</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">hat</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hat</span><span class="dl">"</span><span class="p">,</span> <span class="na">price</span><span class="p">:</span> <span class="mi">100</span> <span class="p">};</span>
+<span class="kd">let</span> <span class="nx">gloves</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Gloves</span><span class="dl">"</span> <span class="p">};</span>
+<span class="kd">let</span> <span class="nx">products</span><span class="p">:</span> <span class="p">{</span> <span class="nl">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">price</span><span class="p">?:</span> <span class="nx">number</span> <span class="p">}[]</span> <span class="o">=</span> <span class="p">[</span><span class="nx">hat</span><span class="p">,</span> <span class="nx">gloves</span><span class="p">];</span>
+<span class="nx">products</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">val</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`name:</span><span class="p">${</span><span class="nx">val</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">,price:</span><span class="p">${</span><span class="nx">val</span><span class="p">.</span><span class="nx">price</span><span class="p">}</span><span class="s2">`</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>输出:</p>
+<ul>
+  <li>name:Hat,price:100</li>
+  <li>name:Gloves,price:<strong><em>undefined</em></strong></li>
+</ul>
+
+<h2 id="4-在形状类型中包含方法">4. 在形状类型中包含方法</h2>
+<ul>
+  <li>形状类型中的类型还可以是函数类型</li>
+</ul>
+
+<h3 id="41-示例">4.1. 示例</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">enum</span> <span class="nx">Feature</span> <span class="p">{</span> <span class="nx">Waterproof</span><span class="p">,</span> <span class="nx">Insulated</span> <span class="p">}</span>
+<span class="kd">let</span> <span class="nx">hat</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hat</span><span class="dl">"</span><span class="p">,</span> <span class="na">price</span><span class="p">:</span> <span class="mi">100</span> <span class="p">};</span>
+<span class="kd">let</span> <span class="nx">umbrella</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Umbrella</span><span class="dl">"</span><span class="p">,</span> <span class="na">price</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="na">hasFeature</span><span class="p">:</span> <span class="p">(</span><span class="nx">feature</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">feature</span> <span class="o">===</span> <span class="nx">Feature</span><span class="p">.</span><span class="nx">Waterproof</span> <span class="p">}</span>
+<span class="kd">let</span> <span class="nx">products</span><span class="p">:</span> <span class="p">{</span> <span class="nl">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">price</span><span class="p">?:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">hasFeature</span><span class="p">?(</span><span class="nx">Feature</span><span class="p">):</span> <span class="nx">boolean</span> <span class="p">}[]</span> <span class="o">=</span> <span class="p">[</span><span class="nx">hat</span><span class="p">,</span> <span class="nx">umbrella</span><span class="p">];</span>
+<span class="nx">products</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">val</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`name:</span><span class="p">${</span><span class="nx">val</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">,price:</span><span class="p">${</span><span class="nx">val</span><span class="p">.</span><span class="nx">price</span><span class="p">}</span><span class="s2">,Waterproof:</span><span class="p">${</span><span class="nx">val</span><span class="p">.</span><span class="nx">hasFeature</span><span class="p">(</span><span class="nx">Feature</span><span class="p">.</span><span class="nx">Waterproof</span><span class="p">)}</span><span class="s2">`</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/TypeScript学习笔记/Essential-TypeScript/methods_in_shapetype.png" alt="methods_in_shapetype" /></p>
+
+<h3 id="42-避免undefined的函数">4.2. 避免undefined的函数</h3>
+<ul>
+  <li>如果运行上面的示例，会出现错误：<strong>TypeError: val.hasFeature is not a function</strong>，因为 <code class="language-plaintext highlighter-rouge">hat</code> 里没有 <code class="language-plaintext highlighter-rouge">hasFeature</code> 方法，可以用以下两种方式避免
+    <ul>
+      <li>设置strictNullChecks为true，这会让tsc在代码编码阶段就会提示错误：<strong>Cannot invoke an object which is possibly ‘undefined’.ts(2722)</strong></li>
+      <li>在使用 <code class="language-plaintext highlighter-rouge">hasFeature</code> 之前进行判断其是否存在，例如</li>
+    </ul>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">products</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">val</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`name:</span><span class="p">${</span><span class="nx">val</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">,price:</span><span class="p">${</span><span class="nx">val</span><span class="p">.</span><span class="nx">price</span><span class="p">}</span><span class="s2">,Waterproof:</span><span class="p">${</span><span class="nx">val</span><span class="p">.</span><span class="nx">hasFeature</span> <span class="p">?</span> <span class="nx">val</span><span class="p">.</span><span class="nx">hasFeature</span><span class="p">(</span><span class="nx">Feature</span><span class="p">.</span><span class="nx">Waterproof</span><span class="p">)</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">false</span><span class="dl">'</span><span class="p">}</span><span class="s2">`</span><span class="p">));</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="5-为形状类型使用类型别名">5. 为形状类型使用类型别名</h2>
+<ul>
+  <li>为了更加容易在代码中一致地使用形状类型，可以为其定义类型别名</li>
+</ul>
+
+<h3 id="51-示例">5.1. 示例</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">enum</span> <span class="nx">Feature</span> <span class="p">{</span> <span class="nx">Waterproof</span><span class="p">,</span> <span class="nx">Insulated</span> <span class="p">}</span>
+<span class="nx">type</span> <span class="nx">Product</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+    <span class="nx">price</span><span class="p">?:</span> <span class="nx">number</span><span class="p">,</span>
+    <span class="nx">hasFeature</span><span class="p">?(</span><span class="nx">Feature</span><span class="p">):</span> <span class="nx">boolean</span>
+<span class="p">};</span>
+<span class="kd">let</span> <span class="nx">products</span><span class="p">:</span> <span class="nx">Product</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+</code></pre></div></div>
+
+<h2 id="6-处理超额属性excess-properties">6. 处理超额属性（Excess Properties）</h2>
+<ul>
+  <li>
+    <p>当提供了不属于形状类型里的元素时，tsc会报错，例如：</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">type</span> <span class="nx">Product</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+      <span class="na">price</span><span class="p">:</span> <span class="nx">number</span>
+  <span class="p">};</span>
+  <span class="kd">let</span> <span class="nx">hat1</span><span class="p">:</span> <span class="nx">Product</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hat</span><span class="dl">'</span><span class="p">,</span> <span class="na">price</span><span class="p">:</span> <span class="mi">100</span> <span class="p">};</span> <span class="c1">// Ok</span>
+  <span class="kd">let</span> <span class="nx">hat2</span><span class="p">:</span> <span class="nx">Product</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hat</span><span class="dl">'</span><span class="p">,</span> <span class="na">price</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="na">special</span><span class="p">:</span> <span class="dl">'</span><span class="s1">glory</span><span class="dl">'</span> <span class="p">};</span> <span class="c1">// Error: Object literal may only specify known properties, and 'special' does not exist in type 'Product'.ts(2322)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="61-解决属性超额错误">6.1. 解决属性超额错误</h3>
+<ul>
+  <li>移除超额的属性: <code class="language-plaintext highlighter-rouge">special: 'glory'</code></li>
+  <li>移除 <code class="language-plaintext highlighter-rouge">hat2</code> 的类型注释</li>
+  <li>设置编译器选项<strong>suppressExcessPropertyErrors</strong>为true
+    <ul>
+      <li>这个选项会压制属性超额错误信息。</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p>接下来，我们学习<a href="/notes/typescript/essential-ts/2019-07-03-02.%E8%81%94%E5%90%88%E5%BD%A2%E7%8A%B6%E7%B1%BB%E5%9E%8B.html">联合形状类型（Union Shape Type）</a>。</p>
+</div>
+	</article>
+</div><!-- Footer -->
+<div id="footer" style="margin-bottom: 0;">
+  
+  <!-- Copyright -->
+  <ul class="copyright">
+    
+      <li>&copy;让IT更简单点. All rights reserved.</li>
+    
+    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    <li>Jekyll integration: <a href="https://chrisbobbe.github.io/">Chris Bobbe</a></li>
+  </ul>
+  
+</div></body>
+</html>

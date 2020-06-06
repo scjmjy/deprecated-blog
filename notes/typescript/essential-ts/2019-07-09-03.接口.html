@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<!--
+Prologue by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Jekyll integration by Chris Bobbe | chrisbobbe.github.io
+-->
+<html><head><!-- Robots -->
+  <meta name="robots" content="index, follow" /><link rel="canonical" href="http://localhost:4000/notes/typescript/essential-ts/2019-07-09-03.%E6%8E%A5%E5%8F%A3.html" /><!-- Title, description, author --><title>03.接口 | 让IT更简单点 - 一个有信仰的IT爱好者</title>
+  <meta name="description" content="Ronnie的个人网站， 旨在提供清晰易懂的编程教学" />
+  <meta name="author" content="Ronnie" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="03.接口 | 让IT更简单点 - 一个有信仰的IT爱好者" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://localhost:4000/assets/images/avatar.png" />
+  <meta property="og:url" content="http://localhost:4000/notes/typescript/essential-ts/2019-07-09-03.%E6%8E%A5%E5%8F%A3.html" />
+  <meta property="og:site_name" content="让IT更简单点" />
+  <meta property="og:description" content="Ronnie的个人网站， 旨在提供清晰易懂的编程教学" />
+  
+  <!-- Styles -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js" defer></script><![endif]-->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+  <!-- <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.1.0/css/all.css" rel="stylesheet"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.1.0/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/md-hl-github.css">
+  <link rel="stylesheet" href="/assets/css/md-layout-github.css">
+
+  <!-- Scripts -->
+  <script src="http://lib.sinaapp.com/js/jquery/1.12.4/jquery-1.12.4.min.js" defer></script>
+  <script src="/assets/js/jquery.scrolly.min.js" defer></script>
+  <script src="/assets/js/jquery.scrollzer.min.js" defer></script>
+  <script src="/assets/js/skel.min.js" defer></script>
+  <script src="/assets/js/util.js" defer></script>
+  <!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js" defer></script><![endif]-->
+  <script src="/assets/js/main.js" defer></script>
+
+</head><body><!-- Header -->
+<div id="header">
+  <div class="top"><!-- Logo -->
+<div id="logo">
+  <a href="http://localhost:4000/" id="home-link">
+    <span class="image avatar48"><img src="/assets/images/avatar.png" alt="Avatar of Ronnie" /></span>
+    <h1 id="title">让IT更简单点</h1>
+    <p>一个有信仰的IT爱好者</p>
+  </a>
+</div><!-- Nav -->
+<nav id="nav">
+  <ul><!-- <li><a href="http://localhost:4000/" id="主页-link"> -->
+          <li><a href="/" id="主页-link">
+            <span class="icon fa-home">主页</span>
+          </a></li><!-- <li><a href="http://localhost:4000/blog.html" id="文章-link"> -->
+          <li><a href="/blog.html" id="文章-link">
+            <span class="icon fa-link">文章</span>
+          </a></li></ul>
+</nav></div>
+  <div class="bottom"><!-- Social Icons -->
+<ul class="icons"><li><a href="https://github.com/scjmjy" class="icon-b fa-github"><span class="label">GitHub</span></a></li><li><a href="mailto:mjyok12345@gmail.com" class="icon fa-envelope"><span class="label">Email</span></a></li></ul>
+</div>
+</div>
+<!-- Main -->
+<div id="main">
+	<!-- Post -->
+	<article class="markdown-body">
+	  <div class="container">
+			<header>
+				<h2>03.接口</h2>
+				<p>Ronnie, 09 July 2019</p>
+			</header><!-- # 接口（Interfaces） -->
+<p>本节讲解TypeScript中的接口（Interfaces）。</p>
+
+<p>本节目录：
+<!-- TOC --></p>
+
+<ul>
+  <li><a href="#1-基本语法">1. 基本语法</a>
+    <ul>
+      <li><a href="#11-语法示例">1.1. 语法示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#2-合并接口声明">2. 合并接口声明</a></li>
+  <li><a href="#3-实现多个接口">3. 实现多个接口</a>
+    <ul>
+      <li><a href="#31-示例">3.1. 示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#4-继承接口">4. 继承接口</a>
+    <ul>
+      <li><a href="#41-示例">4.1. 示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#5-接口和形状类型">5. 接口和形状类型</a></li>
+  <li><a href="#6-可选的接口属性和方法">6. 可选的接口属性和方法</a></li>
+  <li><a href="#7-抽象接口实现">7. 抽象接口实现</a>
+    <ul>
+      <li><a href="#71-示例">7.1. 示例</a></li>
+    </ul>
+  </li>
+  <li><a href="#8-接口的类型守护">8. 接口的类型守护</a></li>
+</ul>
+
+<!-- /TOC -->
+
+<hr />
+
+<h2 id="1-基本语法">1. 基本语法</h2>
+<ul>
+  <li>接口描述了一个对象的形状（子类必须实现），这和 <code class="language-plaintext highlighter-rouge">type</code> 非常类似，并且后续版本的TypeScript消除了 <code class="language-plaintext highlighter-rouge">interface</code> 和 <code class="language-plaintext highlighter-rouge">type</code> 的差异，以至于它们可以互换使用</li>
+  <li>接口提供了和类似C#语言一致的编程习惯</li>
+  <li>子类使用 <code class="language-plaintext highlighter-rouge">implements</code> 继承接口，而不是 <code class="language-plaintext highlighter-rouge">extends</code></li>
+</ul>
+
+<h3 id="11-语法示例">1.1. 语法示例</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="nl">name</span><span class="p">:</span><span class="nx">string</span><span class="p">;</span>
+    <span class="nx">getDetails</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kd">class</span> <span class="nx">Man</span> <span class="kr">implements</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="kr">public</span> <span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="kr">public</span> <span class="nx">moustache</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="nx">getDetails</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">I am a man.</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/TypeScript学习笔记/Essential-TypeScript/interfaces1.png" alt="interfaces1" /></p>
+
+<p><img src="/assets/images/TypeScript学习笔记/Essential-TypeScript/interfaces2.png" alt="interfaces2" /></p>
+
+<h2 id="2-合并接口声明">2. 合并接口声明</h2>
+<ul>
+  <li>同一个接口可以被声明多次</li>
+  <li>只能在同一个代码文件里</li>
+  <li>所有的声明要么都被导出（export），要么都不被导出</li>
+  <li>这个特性比较奇怪，没有多大用处</li>
+</ul>
+
+<h2 id="3-实现多个接口">3. 实现多个接口</h2>
+<ul>
+  <li>一个类可以实现多个接口，用逗号“,”分开多个接口名字</li>
+  <li>多个接口必须<strong>没有</strong>冲突的属性，例如A接口有id:string属性，B接口有id:number属性</li>
+</ul>
+
+<h3 id="31-示例">3.1. 示例</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="nl">name</span><span class="p">:</span><span class="nx">string</span><span class="p">;</span>
+    <span class="nx">getDetails</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kr">interface</span> <span class="nx">Parent</span> <span class="p">{</span>
+    <span class="nl">role</span><span class="p">:</span><span class="dl">'</span><span class="s1">Dad</span><span class="dl">'</span><span class="o">|</span><span class="dl">'</span><span class="s1">Mom</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">getRole</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kd">class</span> <span class="nx">Man</span> <span class="kr">implements</span> <span class="nx">Person</span><span class="p">,</span><span class="nx">Parent</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="kr">public</span> <span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span><span class="kr">public</span> <span class="nx">role</span><span class="p">:</span><span class="dl">'</span><span class="s1">Dad</span><span class="dl">'</span><span class="o">|</span><span class="dl">'</span><span class="s1">Mom</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="nx">getDetails</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">I am a man.</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">getRole</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`I am a </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">role</span><span class="p">}</span><span class="s2">.`</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="4-继承接口">4. 继承接口</h2>
+<ul>
+  <li>接口可以像类一样被继承，同样的方法，但是结果仍然是接口</li>
+</ul>
+
+<h3 id="41-示例">4.1. 示例</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="nl">name</span><span class="p">:</span><span class="nx">string</span><span class="p">;</span>
+    <span class="nx">getDetails</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kr">interface</span> <span class="nx">Parent</span> <span class="kd">extends</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="nl">role</span><span class="p">:</span><span class="dl">'</span><span class="s1">Dad</span><span class="dl">'</span><span class="o">|</span><span class="dl">'</span><span class="s1">Mom</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">getRole</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kd">class</span> <span class="nx">Man</span> <span class="kr">implements</span> <span class="nx">Parent</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="kr">public</span> <span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span><span class="kr">public</span> <span class="nx">role</span><span class="p">:</span><span class="dl">'</span><span class="s1">Dad</span><span class="dl">'</span><span class="o">|</span><span class="dl">'</span><span class="s1">Mom</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="nx">getDetails</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">I am a man.</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">getRole</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`I am a </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">role</span><span class="p">}</span><span class="s2">.`</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="5-接口和形状类型">5. 接口和形状类型</h2>
+<ul>
+  <li>类可以 <code class="language-plaintext highlighter-rouge">implements</code> 用 <code class="language-plaintext highlighter-rouge">type</code> 定义的形状类型</li>
+  <li>接口可以 <code class="language-plaintext highlighter-rouge">extends</code> 用 <code class="language-plaintext highlighter-rouge">type</code> 定义的形状类型</li>
+</ul>
+
+<h2 id="6-可选的接口属性和方法">6. 可选的接口属性和方法</h2>
+<ul>
+  <li>和 <code class="language-plaintext highlighter-rouge">type</code> 定义的形状类型一样，<code class="language-plaintext highlighter-rouge">interface</code> 支持可选的属性和方法</li>
+</ul>
+
+<p><img src="/assets/images/TypeScript学习笔记/Essential-TypeScript/interfaces_optional.png" alt="interfaces_optional" /></p>
+
+<h2 id="7-抽象接口实现">7. 抽象接口实现</h2>
+<ul>
+  <li>接口可以通过抽象类被全部或部分实现</li>
+  <li>没有被实现的属性或方法必须用abstract标记</li>
+</ul>
+
+<h3 id="71-示例">7.1. 示例</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="nl">name</span><span class="p">:</span><span class="nx">string</span><span class="p">;</span>
+    <span class="nx">getDetails</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="nx">abstract</span> <span class="kd">class</span> <span class="nx">Parent</span> <span class="kr">implements</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="nx">abstract</span> <span class="nx">name</span><span class="p">:</span><span class="nx">string</span><span class="p">;</span>
+    <span class="nx">getDetails</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="8-接口的类型守护">8. 接口的类型守护</h2>
+<ul>
+  <li>和 <code class="language-plaintext highlighter-rouge">type</code> 一样，<code class="language-plaintext highlighter-rouge">interface</code> 也是纯TypeScript在编译阶段提供的特性</li>
+  <li>因此，JavaScript内部在运行时没有任何对应的信息，所以不能使用 <code class="language-plaintext highlighter-rouge">instanceof</code>（内部使用prototype机制）来判断类型</li>
+  <li>只能使用 <code class="language-plaintext highlighter-rouge">in</code> 关键字来判断</li>
+</ul>
+
+<hr />
+
+<p>接下来，我们学习最后一节——<a href="/notes/typescript/essential-ts/2019-07-10-04.%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BA%E7%B1%BB%E7%9A%84%E5%B1%9E%E6%80%A7.html">动态创建类的属性</a>。</p>
+</div>
+	</article>
+</div><!-- Footer -->
+<div id="footer" style="margin-bottom: 0;">
+  
+  <!-- Copyright -->
+  <ul class="copyright">
+    
+      <li>&copy;让IT更简单点. All rights reserved.</li>
+    
+    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    <li>Jekyll integration: <a href="https://chrisbobbe.github.io/">Chris Bobbe</a></li>
+  </ul>
+  
+</div></body>
+</html>
