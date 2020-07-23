@@ -1,0 +1,32 @@
+{%- comment -%}
+  Include vars:
+{%- endcomment -%}
+
+<!-- Nav -->
+<nav id="nav">
+  <ul>
+      {% assign cat2 = page.categories[2]  %}
+      {% assign cat2_posts = site.categories[cat2] | sort: "date" %}
+      {%- for post in cat2_posts -%}
+        {%- if page.url == post.url -%}
+          {%- assign active = "active" -%}
+        {%- endif -%}
+        {%- if forloop.index == 1 -%}
+        <li><a href="{{- post.url -}}" class="{{- active }}"><span class="icon fa-file">{{- post.title -}}</span></a></li>
+        <hr>
+        {%- else -%}
+        <li style="padding-left: 1em;"><a href="{{- post.url -}}" class="{{- active }}"><span class="icon fa-file">{{- post.title -}}</span></a></li>
+        {%- endif -%}
+        {%- assign active = nil -%}
+      {%- endfor -%}
+  </ul>
+</nav>
+<script defer>
+  document.addEventListener('readystatechange', event => {
+    if (event.target.readyState === 'complete') {
+      const nav = document.getElementById('nav')
+      const a = nav.getElementsByClassName('active')[0]
+      a.scrollIntoView({behavior: 'smooth'})
+    }
+  });
+</script>

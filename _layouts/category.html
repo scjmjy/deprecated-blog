@@ -1,0 +1,56 @@
+---
+layout: default
+---
+{% assign filter = page.filter%}
+
+{% assign cat1s = "" | split: "" %}
+{% for note_post in site.categories[filter] %}
+    {% assign cat1 = note_post.categories[1] %}
+    
+    {% if cat1s contains cat1 %}
+        {% continue %}
+    {% endif %}
+
+    {% assign cat1s = cat1s | push: cat1 %}
+{% endfor %}
+{%- include header.html scrolly_nav=cat1s is_cat1=true -%}
+<!-- Main -->
+<div id="main">
+
+    {% assign cat1s = "" | split: "" %}
+    {% for note_post in site.categories[filter] %}
+        {% assign cat1 = note_post.categories[1] %}
+        
+        {% if cat1s contains cat1 %}
+            {% continue %}
+        {% endif %}
+    
+        {% assign cat1s = cat1s | push: cat1 %}
+    
+        {% assign cat2s = "" | split: "" %}
+        {% assign cat2ps = "" | split: "" %}
+        {% assign cat1posts = site.categories[cat1] | sort: "date" %}
+        {% for p in cat1posts %}
+            {% assign cat0 = p.categories[0] %}
+            {% if cat0 != filter %}
+                {% continue %}
+            {% endif %}
+            {% assign cat2 = p.categories[2] %}
+
+            {% if cat2s contains cat2 %}
+                {% continue %}
+            {% endif %}
+            {% assign cat2s = cat2s | push: cat2 %}
+            {% assign cat2ps = cat2ps | push: p %}
+        {% endfor %}
+        <section id="{{ cat1 }}">
+            <h2>{{cat1}} 系列</h2>
+            {% for p in cat2ps %}
+                <div>
+                    <h3>{{ forloop.index }}: <a href="{{ p.url }}" target="_blank">{{ p.title }}</a></h3>
+                    <p>{{ p.description }}</p>
+                </div>
+            {% endfor %}
+        </section>
+    {% endfor %}
+</div>

@@ -1,0 +1,31 @@
+{% assign pre = page.previous %}
+
+{%- for i in (1..site.posts.size) -%}
+    {% if pre==nil or pre.categories[2] == page.categories[2] %}
+        {% break %}
+    {% else %}
+        {% assign pre = pre.previous %}
+    {% endif %}
+{%- endfor -%}
+
+{% if pre %}
+<a href="{{- pre.url -}}">上一篇:&nbsp; {{- pre.title -}}</a>
+{% else %}
+<a disabled>上一篇: 无</a>
+{% endif %}
+
+{% assign next = page.next %}
+
+{%- for i in (1..site.posts.size) -%}
+    {% if next==nil or next.categories[2] == page.categories[2] %}
+        {% break %}
+    {% else %}
+        {% assign next = next.next %}
+    {% endif %}
+{%- endfor -%}
+
+{% if next %}
+<a href="{{- next.url -}}">下一篇:&nbsp; {{- next.title -}}</a>
+{% else %}
+<a disabled>下一篇: 无</a>
+{% endif %}

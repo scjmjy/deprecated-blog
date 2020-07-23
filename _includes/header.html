@@ -7,7 +7,13 @@
 <div id="header">
   <div class="top">
     {%- include logo.html -%}
-    {%- include nav.html section_items=include.scrolly_nav -%}
+    {%- if include.is_cat1 -%}
+      {%- include nav_cat1.html section_items=include.scrolly_nav -%}
+    {% elsif include.is_cat2 %}
+      {%- include nav_cat2.html section_items=include.scrolly_nav -%}
+    {%- else -%}
+      {%- include nav.html section_items=include.scrolly_nav -%}
+    {%- endif -%}
   </div>
   <div class="bottom">
     {%- include social_icons.html -%}

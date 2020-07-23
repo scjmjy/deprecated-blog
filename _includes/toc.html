@@ -1,0 +1,14 @@
+{%- assign cat1 = page.categories[1] -%}
+{%- assign cat2 = page.categories[2] -%}
+{%- for c in site.categories -%}
+    {%- if c[0] == cat2 -%}
+        {%- assign posts = c[1] | sort: "date" -%}
+    {%- endif -%}
+{%- endfor -%}
+{%- for post in posts -%}
+    {% if post.toc %}
+<h4>
+    <a href="{{ post.url }}">{{- post.title -}}</a>
+</h4>
+    {% endif %}
+{% endfor %}

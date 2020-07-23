@@ -1,0 +1,9 @@
+{% assign next = page.next %}
+{%- for i in (1..site.posts.size) -%}
+    {% if next and next.chapter == page.chapter and next.categories[2] == page.categories[2] %}
+<h4>
+    <a href="{{ next.url }}">{{- next.title -}}</a>
+</h4>
+    {% endif %}
+    {% assign next = next.next %}
+{%- endfor -%}

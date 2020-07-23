@@ -61,7 +61,7 @@
 
 	html, body {
 		height: 100%;
-		overflow-y: hidden;
+		// overflow-y: hidden;
 	}
 
 	body {
@@ -511,7 +511,7 @@
 
 		.bottom {
 			@include vendor('flex-shrink', '0');
-			padding: 1.5em 0 0.75em 0;
+			padding: 1em 0 0.75em 0;
 
 			> :last-child {
 				margin-bottom: 0;
@@ -535,7 +535,7 @@
 
 	#logo {
 		position: relative;
-		margin: 1.75em 1.5em 1.5em 1.5em;
+		margin: 1em 1.5em 1.5em 1.5em;
 		min-height: 48px;
 		cursor: default;
 		flex: 0 0 auto;
@@ -651,6 +651,8 @@
 /* Main */
 
 	#main {
+		// height: 100%;
+		// overflow-y: auto;
 		margin-left: 375px;
 		> section {
 			text-align: center;
@@ -946,7 +948,7 @@
 			}
 
 			#logo {
-				margin: 1.5em 1.25em 1.25em 1.25em;
+				margin: 1em 1.25em 1.25em 1.25em;
 			}
 
 			#nav {
